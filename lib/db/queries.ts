@@ -21,8 +21,13 @@ import {
 // use the Drizzle adapter for Auth.js / NextAuth
 // https://authjs.dev/reference/adapter/drizzle
 
+const postgresUrl = process.env.POSTGRES_URL;
+if (!postgresUrl) {
+  throw new Error('POSTGRES_URL environment variable is not defined');
+}
+
 // biome-ignore lint: Forbidden non-null assertion.
-const client = postgres(`process.env.POSTGRES_URL`, {
+const client = postgres(postgresUrl, {
   max: 50,
   idle_timeout: 20,
   connect_timeout: 10,
