@@ -22,10 +22,6 @@ import {
 // https://authjs.dev/reference/adapter/drizzle
 
 // biome-ignore lint: Forbidden non-null assertion.
-if (!`process.env.POSTGRES_URL`) {
-  throw new Error('Missing POSTGRES_URL environment variable');
-}
-
 const client = postgres(`process.env.POSTGRES_URL`, {
   max: 50,
   idle_timeout: 20,
