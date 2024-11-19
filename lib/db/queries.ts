@@ -51,8 +51,13 @@ export async function createUser(email: string, password: string) {
   try {
     return await db.insert(user).values({ email, password: hash });
   } catch (error) {
-    console.error('Failed to create user in database');
+    console.error('Failed to create user in database', {
+      error,
+      email,
+      timestamp: new Date().toISOString()
+    });
     throw error;
+    
   }
 }
 
