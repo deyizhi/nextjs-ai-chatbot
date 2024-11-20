@@ -18,7 +18,7 @@ export const Overview = () => {
           <span>+</span>
           <MessageIcon size={32} />
         </p>
-        <p>
+        <p className="font-regular font-display text-3xl md:text-4xl">
           Ask anything about investment
         </p>
       </div>
