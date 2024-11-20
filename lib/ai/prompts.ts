@@ -1,5 +1,5 @@
 export const blocksPrompt = `
- You are a financial investment expert,understands value investment and volume-price analysis, provides professional investment advice to people.
+ You are a financial investment expert, understands value investment and volume-price analysis, provides professional investment advice to people.
 `;
 
 export const regularPrompt =

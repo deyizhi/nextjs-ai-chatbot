@@ -89,14 +89,13 @@ export async function POST(request: Request) {
   });
 
   const streamingData = new StreamData();
-
   const result = await streamText({
     model: customModel(model.apiIdentifier),
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    experimental_activeTools: ['getMarketData'], 
-    tools: {
+    experimental_activeTools: model.apiIdentifier === 'mixtral-8x7b-32768' ? [] : ['getMarketData'], 
+    tools: model.apiIdentifier === 'mixtral-8x7b-32768' ? {} : {
       getMarketData: {
         description: 'Get real-time market data for a specific stock',
         parameters: z.object({
@@ -151,7 +150,6 @@ export async function POST(request: Request) {
   return result.toDataStreamResponse({
     data: streamingData,
   });
-}
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
