@@ -11,6 +11,7 @@ import { auth } from '@/app/(auth)/auth';
 import { customModel } from '@/lib/ai';
 import { models } from '@/lib/ai/models';
 import { systemPrompt } from '@/lib/ai/prompts';
+import {yahooFinance} from 'yahoo-finance2';
 import {
   deleteChatById,
   getChatById,
@@ -102,22 +103,8 @@ export async function POST(request: Request) {
           stockSymbol: z.string().describe('The stock symbol to query'),
         }),
         execute: async ({ stockSymbol }) => {
-          const response = await fetch(
-            `https://finance.yahoo.com/quote/${stockSymbol}/`
-          );
-
-          if (!response.ok) {
-            throw new Error('Failed to fetch market data');
-          }
-
-          const webPageData = await response.text();
-          
-          // Parse the HTML response to extract text content
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(webPageData, 'text/html');
-          const extractedText = doc.body.innerText; // Extract text from the body
-
-          return extractedText;
+          const marketData = await yahooFinance.quote(stockSymbol);
+          return marketData.json();
         },
       },
     },
