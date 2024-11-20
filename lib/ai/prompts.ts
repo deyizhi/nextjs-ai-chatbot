@@ -3,6 +3,6 @@ export const blocksPrompt = `
 `;
 
 export const regularPrompt =
-  'You are a friendly assistant! Keep your responses concise and helpful.';
+  'You are a friendly assistant! Keep your responses concise and helpful. Only call tools to fetch market data when the user asks for specific stock information.';
 
 export const systemPrompt = `${regularPrompt}\n\n${blocksPrompt}`;

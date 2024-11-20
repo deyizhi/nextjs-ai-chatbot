@@ -94,8 +94,8 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    experimental_activeTools: model.apiIdentifier === 'mixtral-8x7b-32768' ? [] : ['getMarketData'], 
-    tools: model.apiIdentifier === 'mixtral-8x7b-32768' ? {} : {
+    experimental_activeTools: ['getMarketData'], 
+    tools: {
       getMarketData: {
         description: 'Get real-time market data for a specific stock',
         parameters: z.object({
