@@ -9,11 +9,13 @@ export const blocksPrompt = `
   - When explicitly requested to create a document
 
   **When NOT to use \`createDocument\`:**
+  - not explicitly requested to create a document
   - For informational/explanatory content
   - For conversational responses
   - When asked to keep it in chat
 
   **Using \`updateDocument\`:**
+  - explicitly requested to update a document
   - Default to full document rewrites for major changes
   - Use targeted updates only for specific, isolated changes
   - Follow user instructions for which parts to modify
