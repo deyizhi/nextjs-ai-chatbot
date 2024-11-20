@@ -104,7 +104,7 @@ export async function POST(request: Request) {
         }),
         execute: async ({ stockSymbol }) => {
           const marketData = await yahooFinance.quote(stockSymbol);
-          return marketData.json();
+          return marketData;
         },
       },
     },
