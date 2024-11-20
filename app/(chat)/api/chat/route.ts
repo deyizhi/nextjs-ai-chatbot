@@ -142,7 +142,7 @@ export async function POST(request: Request) {
       streamingData.close();
     },
     experimental_telemetry: {
-      isEnabled: true,
+      isEnabled: false,
       functionId: 'stream-text',
     },
   });
