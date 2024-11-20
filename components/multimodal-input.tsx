@@ -30,14 +30,24 @@ import { Textarea } from './ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'Invest in technology stocks',
-    label: 'for long-term growth',
-    action: 'Consider investing in technology stocks for long-term growth.',
+    title: 'Invest in blue-chip stocks',
+    label: 'for stable returns',
+    action: 'Consider investing in blue-chip stocks for stable returns over time.',
   },
   {
-    title: 'Diversify your portfolio',
-    label: 'with real estate',
-    action: 'Diversify your portfolio by including real estate investments.',
+    title: 'Explore dividend stocks',
+    label: 'for passive income',
+    action: 'Explore dividend stocks to generate passive income from your investments.',
+  },
+  {
+    title: 'Invest in growth stocks',
+    label: 'for high potential',
+    action: 'Invest in growth stocks for high potential returns, keeping in mind the associated risks.',
+  },
+  {
+    title: 'Consider index funds',
+    label: 'for diversified exposure',
+    action: 'Consider index funds for diversified exposure to the stock market with lower fees.',
   },
 ];
 
