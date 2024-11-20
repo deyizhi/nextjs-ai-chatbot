@@ -9,12 +9,6 @@ export interface Model {
 
 export const models: Array<Model> = [
   {
-    id: 'mixtral-8x7b-32768',
-    label: 'Mixtral 8x7B',
-    apiIdentifier: 'mixtral-8x7b-32768',
-    description: 'Powerful model for complex reasoning and generation tasks',
-  },
-  {
     id: 'llama-3.2-90b-vision-preview',
     label: 'Llama 3.2 90B Vision',
     apiIdentifier: 'llama-3.2-90b-vision-preview', 
@@ -26,12 +20,12 @@ export const models: Array<Model> = [
     apiIdentifier: 'grok-beta',
     description: 'Model designed for advanced reasoning and analysis tasks',
   },
-  {
-    id: 'grok-vision-beta',
-    label: 'Grok Vision Beta',
-    apiIdentifier: 'grok-vision-beta',
-    description: 'Model with vision capabilities for enhanced analysis',
-  },
+  // {
+  //   id: 'grok-vision-beta',
+  //   label: 'Grok Vision Beta',
+  //   apiIdentifier: 'grok-vision-beta',
+  //   description: 'Model with vision capabilities for enhanced analysis',
+  // },
 ] as const;
 
 export const DEFAULT_MODEL_NAME: string = 'mixtral-8x7b-32768';
