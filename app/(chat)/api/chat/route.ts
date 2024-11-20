@@ -110,8 +110,14 @@ export async function POST(request: Request) {
             throw new Error('Failed to fetch market data');
           }
 
-          const marketData = await response.text();
-          return marketData;
+          const webPageData = await response.text();
+          
+          // Parse the HTML response to extract text content
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(webPageData, 'text/html');
+          const extractedText = doc.body.innerText; // Extract text from the body
+
+          return extractedText;
         },
       },
     },
