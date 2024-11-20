@@ -150,6 +150,7 @@ export async function POST(request: Request) {
   return result.toDataStreamResponse({
     data: streamingData,
   });
+}
 
 export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url);
