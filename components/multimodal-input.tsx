@@ -30,14 +30,14 @@ import { Textarea } from './ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'What is the weather',
-    label: 'in San Francisco?',
-    action: 'What is the weather in San Francisco?',
+    title: 'Invest in technology stocks',
+    label: 'for long-term growth',
+    action: 'Consider investing in technology stocks for long-term growth.',
   },
   {
-    title: 'Help me draft an essay',
-    label: 'about Silicon Valley',
-    action: 'Help me draft a short essay about Silicon Valley',
+    title: 'Diversify your portfolio',
+    label: 'with real estate',
+    action: 'Diversify your portfolio by including real estate investments.',
   },
 ];
 
