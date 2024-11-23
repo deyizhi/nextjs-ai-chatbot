@@ -35,19 +35,19 @@ const suggestedActions = [
     action: 'Consider investing in blue-chip stocks for stable returns over time.',
   },
   {
-    title: 'Explore dividend stocks',
-    label: 'for passive income',
-    action: 'Explore dividend stocks to generate passive income from your investments.',
+    title: 'Adopt a balanced diet',
+    label: 'for better health',
+    action: 'Adopt a balanced diet to improve your overall health and well-being.',
   },
   {
-    title: 'Invest in growth stocks',
-    label: 'for high potential',
-    action: 'Invest in growth stocks for high potential returns, keeping in mind the associated risks.',
+    title: 'Incorporate regular exercise',
+    label: 'for physical fitness',
+    action: 'Incorporate regular exercise into your routine to enhance physical fitness and mental clarity.',
   },
   {
-    title: 'Consider index funds',
-    label: 'for diversified exposure',
-    action: 'Consider index funds for diversified exposure to the stock market with lower fees.',
+    title: 'Practice mindfulness and meditation',
+    label: 'for mental wellness',
+    action: 'Practice mindfulness and meditation to reduce stress and improve mental wellness.',
   },
 ];
 

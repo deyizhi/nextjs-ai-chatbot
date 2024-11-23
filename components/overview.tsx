@@ -19,7 +19,7 @@ export const Overview = () => {
           <MessageIcon size={32} />
         </p>
         <p className="font-regular font-display text-3xl md:text-4xl">
-          Ask anything about investment
+          Ask anything
         </p>
       </div>
     </motion.div>
