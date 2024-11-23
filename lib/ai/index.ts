@@ -1,7 +1,7 @@
 import { groq } from '@ai-sdk/groq';
 import { xai } from '@ai-sdk/xai';
 import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
-import { openai } from '@openai-sdk'; // Assuming this is the correct import for the OpenAI object
+import { createOpenAI } from '@ai-sdk/openai'; // Assuming this is the correct import for the OpenAI object
 
 import { customMiddleware } from './custom-middleware';
 
