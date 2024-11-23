@@ -20,12 +20,24 @@ export const models: Array<Model> = [
     apiIdentifier: 'grok-beta',
     description: 'Model designed for advanced reasoning and analysis tasks',
   },
-  // {
-  //   id: 'grok-vision-beta',
-  //   label: 'Grok Vision Beta',
-  //   apiIdentifier: 'grok-vision-beta',
-  //   description: 'Model with vision capabilities for enhanced analysis',
-  // },
+  {
+    id: 'gpt-3.5-turbo',
+    label: 'GPT-3.5 Turbo',
+    apiIdentifier: 'gpt-3.5-turbo',
+    description: 'A powerful model for conversational tasks',
+  },
+  {
+    id: 'gpt-4o-mini',
+    label: 'GPT-4O Mini',
+    apiIdentifier: 'gpt-4o-mini',
+    description: 'A compact version of GPT-4 for efficient processing',
+  },
+  {
+    id: 'net-gpt-3.5-turbo',
+    label: 'Net GPT-3.5 Turbo',
+    apiIdentifier: 'net-gpt-3.5-turbo',
+    description: 'A variant of GPT-3.5 Turbo optimized for network tasks',
+  },
 ] as const;
 
 export const DEFAULT_MODEL_NAME: string = 'grok-beta';
