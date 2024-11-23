@@ -27,16 +27,22 @@ export const models: Array<Model> = [
     description: 'A powerful model for conversational tasks',
   },
   {
-    id: 'gpt-4o-mini',
-    label: 'GPT-4O Mini',
-    apiIdentifier: 'gpt-4o-mini',
-    description: 'A compact version of GPT-4 for efficient processing',
-  },
-  {
     id: 'net-gpt-3.5-turbo',
     label: 'Net GPT-3.5 Turbo',
     apiIdentifier: 'net-gpt-3.5-turbo',
     description: 'A variant of GPT-3.5 Turbo optimized for network tasks',
+  },
+  {
+    id: 'gpt-4o-mini',
+    label: 'GPT 4o mini',
+    apiIdentifier: 'gpt-4o-mini',
+    description: 'Small model for fast, lightweight tasks',
+  },
+  {
+    id: 'gpt-4o',
+    label: 'GPT 4o',
+    apiIdentifier: 'gpt-4o',
+    description: 'For complex, multi-step tasks',
   },
 ] as const;
 
