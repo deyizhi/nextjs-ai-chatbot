@@ -5,12 +5,10 @@ import { createOpenAI } from '@ai-sdk/openai'; // Assuming this is the correct i
 
 import { customMiddleware } from './custom-middleware';
 
-const openai_custom = (apiIdentifier: string) => {
-  return createOpenAI({
-    baseUrl: 'https://run.v36.cm/v1', // Specify the base URL for OpenAI
-  });
-};
-
+const openai_custom = createOpenAI({
+  // custom settings, e.g.
+  baseUrl: 'https://run.v36.cm/v1', // Specify the base URL for OpenAI
+});
 
 export const customModel = (apiIdentifier: string) => {
   let model;
