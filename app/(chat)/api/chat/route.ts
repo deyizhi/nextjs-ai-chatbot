@@ -94,18 +94,6 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    tools: {
-      getMarketData: {
-        description: 'Get real-time market data for a specific stock',
-        parameters: z.object({
-          stockSymbol: z.string().describe('The stock symbol to query'),
-        }),
-        execute: async ({ stockSymbol }) => {
-          const marketData = await yahooFinance.quote(stockSymbol);
-          return marketData;
-        },
-      },
-    },
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
         try {
