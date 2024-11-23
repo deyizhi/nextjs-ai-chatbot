@@ -28,4 +28,4 @@ export const models: Array<Model> = [
   // },
 ] as const;
 
-export const DEFAULT_MODEL_NAME: string = 'mixtral-8x7b-32768';
+export const DEFAULT_MODEL_NAME: string = 'grok-beta';
