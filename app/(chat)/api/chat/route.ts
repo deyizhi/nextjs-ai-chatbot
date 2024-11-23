@@ -94,7 +94,6 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    experimental_activeTools: ['getMarketData'], 
     tools: {
       getMarketData: {
         description: 'Get real-time market data for a specific stock',
