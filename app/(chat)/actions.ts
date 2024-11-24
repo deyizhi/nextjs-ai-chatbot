@@ -15,6 +15,8 @@ export async function generateTitleFromUserMessage({
 }: {
   message: CoreUserMessage;
 }) {
+
+  const truncatedMessage = message.length > 50 ? message.slice(0, 50) : message;
   const { text: title } = await generateText({
     model: customModel('mixtral-8x7b-32768'),
     system: `\n
@@ -22,7 +24,7 @@ export async function generateTitleFromUserMessage({
     - ensure it is not more than 80 characters long
     - the title should be a summary of the user's message
     - do not use quotes or colons`,
-    prompt: JSON.stringify(message),
+    prompt: JSON.stringify(truncatedMessage),
   });
 
   return title;
