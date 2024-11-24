@@ -16,7 +16,7 @@ export async function generateTitleFromUserMessage({
   message: CoreUserMessage;
 }) {
 
-  const truncatedMessage = message.length > 50 ? message.slice(0, 50) : message;
+  const truncatedMessage = message.text.length > 100 ? message.text.slice(0, 100) : message.text;
   const { text: title } = await generateText({
     model: customModel('mixtral-8x7b-32768'),
     system: `\n
