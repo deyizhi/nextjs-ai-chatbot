@@ -110,13 +110,10 @@ export function MultimodalInput({
   useEffect(() => {
     if (textareaRef.current) {
       const domValue = textareaRef.current.value;
-      // Prefer DOM value over localStorage to handle hydration
       const finalValue = domValue || localStorageInput || '';
       setInput(finalValue);
       adjustHeight();
     }
-    // Only run once after hydration
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -140,6 +137,8 @@ export function MultimodalInput({
 
     setAttachments([]);
     setLocalStorageInput('');
+    setInput(''); // Reset input after submission
+    adjustHeight(); // Reset textarea height after submission
 
     if (width && width > 768) {
       textareaRef.current?.focus();
@@ -149,6 +148,7 @@ export function MultimodalInput({
     handleSubmit,
     setAttachments,
     setLocalStorageInput,
+    setInput,
     width,
     chatId,
   ]);

@@ -19,7 +19,7 @@ export async function generateTitleFromUserMessage({
     ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
     : message.content;
 
-  const truncatedText = textContent.length > 30 ? textContent.substring(0, 30) : textContent;
+  const truncatedText = textContent.length > 50 ? textContent.substring(0, 50) : textContent;
   let truncatedMessage: CoreUserMessage = { role: 'user', content: truncatedText };
 
   const { text: title } = await generateText({
