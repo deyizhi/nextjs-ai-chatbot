@@ -138,7 +138,9 @@ export function MultimodalInput({
     setAttachments([]);
     setLocalStorageInput('');
     setInput(''); // Reset input after submission
-    textareaRef.current.style.height = 'auto'; // Reset to initial height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'; // Reset to initial height
+    }
 
     if (width && width > 768) {
       textareaRef.current?.focus();
