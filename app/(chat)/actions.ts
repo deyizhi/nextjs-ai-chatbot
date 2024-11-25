@@ -9,12 +9,18 @@ export async function saveModelId(model: string) {
   const cookieStore = await cookies();
   cookieStore.set('model-id', model);
 }
-
 export async function generateTitleFromUserMessage({
   message,
 }: {
   message: CoreUserMessage;
 }) {
+  // Extract the text content from the message
+  const textContent = Array.isArray(message.content) 
+    ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
+    : message.content;
+
+  const truncatedText = textContent.length > 30 ? textContent.substring(0, 30) : textContent;
+  let truncatedMessage: CoreUserMessage = { role: 'user', content: truncatedText };
 
   const { text: title } = await generateText({
     model: customModel('gpt-4o-mini'),
@@ -23,7 +29,7 @@ export async function generateTitleFromUserMessage({
     - ensure it is not more than 30 characters long
     - the title should be a summary of the user's message
     - do not use quotes or colons`,
-    prompt: JSON.stringify(message),
+    prompt: JSON.stringify(truncatedMessage),
   });
 
   return title;
