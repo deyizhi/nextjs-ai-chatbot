@@ -79,6 +79,9 @@ export async function POST(request: Request) {
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
         try {
+          if (!Array.isArray(responseMessages)) {
+            throw new Error('responseMessages Not array');
+          }
           const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
           const userMessage = getMostRecentUserMessage(coreMessages);
           if (!userMessage) {
