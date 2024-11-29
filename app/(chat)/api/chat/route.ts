@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    onFinish: async ({ responseMessages: Array<CoreToolMessage | CoreAssistantMessage> }) => {
+    onFinish: async ({ responseMessages}:{responseMessages:Array<CoreToolMessage | CoreAssistantMessage>} ) => {
       if (session.user?.id) {
 
           const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
