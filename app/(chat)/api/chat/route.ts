@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    onFinish: async ({ responseMessages }: { responseMessages: Array<any> }) => {
+    onFinish: async ({ responseMessages }: { responseMessages: Array< CoreAssistantMessage | CoreToolMessage> }) => {
       if (session.user?.id) {
         try{
           
