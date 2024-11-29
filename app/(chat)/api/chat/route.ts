@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
         try {
-
+          const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
           const userMessage = getMostRecentUserMessage(coreMessages);
           if (!userMessage) {
             return new Response('No user message found', { status: 400 });
@@ -96,10 +96,7 @@ export async function POST(request: Request) {
               { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
             ],
           });
-
-          const responseMessagesWithoutIncompleteToolCalls =
-            sanitizeResponseMessages(responseMessages);
-
+          
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
               (message) => {
