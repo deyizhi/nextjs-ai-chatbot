@@ -1,8 +1,5 @@
 import {
   type Message,
-  CoreAssistantMessage,
-  CoreMessage,
-  CoreToolMessage,
   StreamData,
   convertToCoreMessages,
   streamObject,
@@ -72,6 +69,24 @@ export async function POST(request: Request) {
   }
 
   const coreMessages = convertToCoreMessages(messages);
+  const userMessage = getMostRecentUserMessage(coreMessages);
+
+  if (!userMessage) {
+    return new Response('No user message found', { status: 400 });
+  }
+
+  const chat = await getChatById({ id });
+
+  if (!chat) {
+    const title = await generateTitleFromUserMessage({ message: userMessage });
+    await saveChat({ id, userId: session.user.id, title });
+  }
+
+  await saveMessages({
+    messages: [
+      { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
+    ],
+  });
 
   const streamingData = new StreamData();
   const result = await streamText({
@@ -81,26 +96,10 @@ export async function POST(request: Request) {
     maxSteps: 5,
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
-        try{
-          
-          const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
-          const userMessage = getMostRecentUserMessage(coreMessages);
-          if (!userMessage) {
-            return new Response('No user message found', { status: 400 });
-          }
+        try {
+          const responseMessagesWithoutIncompleteToolCalls =
+            sanitizeResponseMessages(responseMessages);
 
-          const chat = await getChatById({ id });
-          if (!chat) {
-            const title = await generateTitleFromUserMessage({ message: userMessage });
-            await saveChat({ id, userId: session.user.id, title });
-          }
-
-          await saveMessages({
-            messages: [
-              { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
-            ],
-          });
-          
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
               (message) => {
@@ -122,7 +121,6 @@ export async function POST(request: Request) {
               },
             ),
           });
-
         } catch (error) {
           console.error('Failed to save chat');
         }
