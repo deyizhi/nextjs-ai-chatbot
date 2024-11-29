@@ -81,7 +81,8 @@ export async function POST(request: Request) {
     maxSteps: 5,
     onFinish: async ({ responseMessages }: { responseMessages: Array<any> }) => {
       if (session.user?.id) {
-
+        try{
+          
           const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
           const userMessage = getMostRecentUserMessage(coreMessages);
           if (!userMessage) {
