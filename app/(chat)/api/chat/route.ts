@@ -69,24 +69,6 @@ export async function POST(request: Request) {
   }
 
   const coreMessages = convertToCoreMessages(messages);
-  const userMessage = getMostRecentUserMessage(coreMessages);
-
-  if (!userMessage) {
-    return new Response('No user message found', { status: 400 });
-  }
-
-  const chat = await getChatById({ id });
-
-  if (!chat) {
-    const title = await generateTitleFromUserMessage({ message: userMessage });
-    await saveChat({ id, userId: session.user.id, title });
-  }
-
-  await saveMessages({
-    messages: [
-      { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
-    ],
-  });
 
   const streamingData = new StreamData();
   const result = await streamText({
@@ -97,6 +79,24 @@ export async function POST(request: Request) {
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
         try {
+
+          const userMessage = getMostRecentUserMessage(coreMessages);
+          if (!userMessage) {
+            return new Response('No user message found', { status: 400 });
+          }
+
+          const chat = await getChatById({ id });
+          if (!chat) {
+            const title = await generateTitleFromUserMessage({ message: userMessage });
+            await saveChat({ id, userId: session.user.id, title });
+          }
+
+          await saveMessages({
+            messages: [
+              { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
+            ],
+          });
+
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
 
@@ -121,6 +121,7 @@ export async function POST(request: Request) {
               },
             ),
           });
+
         } catch (error) {
           console.error('Failed to save chat');
         }
