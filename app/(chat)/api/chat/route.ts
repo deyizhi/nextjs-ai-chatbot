@@ -1,5 +1,8 @@
 import {
   type Message,
+  CoreAssistantMessage,
+  CoreMessage,
+  CoreToolMessage,
   StreamData,
   convertToCoreMessages,
   streamObject,
@@ -76,12 +79,9 @@ export async function POST(request: Request) {
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
-    onFinish: async ({ responseMessages }) => {
+    onFinish: async ({ responseMessages: Array<CoreToolMessage | CoreAssistantMessage> }) => {
       if (session.user?.id) {
-        try {
-          if (!Array.isArray(responseMessages)) {
-            throw new Error('responseMessages Not array');
-          }
+
           const responseMessagesWithoutIncompleteToolCalls = sanitizeResponseMessages(responseMessages);
           const userMessage = getMostRecentUserMessage(coreMessages);
           if (!userMessage) {
