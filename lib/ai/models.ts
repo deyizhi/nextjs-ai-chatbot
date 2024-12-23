@@ -38,6 +38,18 @@ export const models: Array<Model> = [
     apiIdentifier: 'gpt-4o-mini',
     description: 'Small model for fast, lightweight tasks',
   },
+  {
+    id: 'gemini-1.5-flash',
+    label: 'Google Gemini 1.5 Flash',
+    apiIdentifier: 'gemini-1.5-flash',
+    description: 'The previous generation of Google Gemini Flash models, offering a balance of power and speed',
+  },
+  {
+    id: 'gemini-2.0-flash-exp',
+    label: 'Google Gemini 2.0 Flash Exp',
+    apiIdentifier: 'gemini-2.0-flash-exp',
+    description: 'The latest advanced model from Google, offering enhanced capabilities and speed',
+  },
 ] as const;
 
 export const DEFAULT_MODEL_NAME: string = 'gpt-4o-mini';

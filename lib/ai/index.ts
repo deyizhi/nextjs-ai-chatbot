@@ -3,12 +3,14 @@ import { xai } from '@ai-sdk/xai';
 import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the correct import for the OpenAI object
 import { customMiddleware } from './custom-middleware';
+import { google } from '@ai-sdk/google';
 
 const openai_custom = createOpenAI({
   // custom settings, e.g.
   baseURL: process.env.OPENAI_URL_CUSTOM, // Specify the base URL for OpenAI
   apiKey: process.env.OPENAI_API_KEY_CUSTOM, 
 });
+
 
 export const customModel = (apiIdentifier: string) => {
   let model;
@@ -24,6 +26,10 @@ export const customModel = (apiIdentifier: string) => {
       break;
     case 'gpt-4o':
       model = openai(apiIdentifier); // Using the OpenAI object for these models
+      break;
+    case 'gemini-1.5-flash':
+    case 'gemini-2.0-flash-exp':
+      model = google(apiIdentifier); // Using Google SDK for Gemini models
       break;
     default:
       model = groq(apiIdentifier);
