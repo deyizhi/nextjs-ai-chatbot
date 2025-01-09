@@ -15,12 +15,6 @@ export const models: Array<Model> = [
     description: 'Advanced model with vision capabilities',
   },
   {
-    id: 'grok-beta',
-    label: 'Grok Beta',
-    apiIdentifier: 'grok-beta',
-    description: 'Model designed for advanced reasoning and analysis tasks',
-  },
-  {
     id: 'gpt-3.5-turbo',
     label: 'GPT-3.5 Turbo',
     apiIdentifier: 'gpt-3.5-turbo',
