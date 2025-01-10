@@ -17,6 +17,8 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY ?? '',
 });
 
+const haiku3Model = openrouter.createChatModel('anthropic/claude-3-haiku');
+
 export const customModel = (apiIdentifier: string) => {
   let model;
   switch (apiIdentifier) {
@@ -29,11 +31,11 @@ export const customModel = (apiIdentifier: string) => {
       model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
       break;
     case 'gpt-4o':
-      model = openrouter.chatModel('openai/gpt-4o-2024-11-20');
+      //model = openrouter.chatModel('openai/gpt-4o-2024-11-20');
       break;
     case 'o1':
     case 'o1-mini':
-      model = openrouter.chatModel('openai/'+apiIdentifier);
+      //model = openrouter.chatModel('openai/'+apiIdentifier);
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
@@ -43,11 +45,12 @@ export const customModel = (apiIdentifier: string) => {
       model = deepseek(apiIdentifier);
       break;
     case 'claude-3-haiku': 
+      model = haiku3Model;
     case 'claude-3.5-haiku': 
     case 'claude-3.5-sonnet': 
     case 'claude-3.5-sonnet': 
     case 'claude-3-opu': 
-      model = openrouter.chatModel('anthropic/'+apiIdentifier);
+    //TODO
       break;
     default:
       model = groq(apiIdentifier);
