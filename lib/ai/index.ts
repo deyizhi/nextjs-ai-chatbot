@@ -13,11 +13,11 @@ const openai_custom = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY_CUSTOM, 
 });
 
-const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY ?? '',
+const openrouter_custom = createOpenAI({
+  // custom settings, e.g.
+  baseURL: 'https://openrouter.ai/api/v1', // Specify the base URL for OpenAI
+  apiKey: process.env.OPENROUTER_API_KEY, 
 });
-
-const haiku3Model = openrouter.createChatModel('anthropic/claude-3-haiku');
 
 export const customModel = (apiIdentifier: string) => {
   let model;
@@ -45,7 +45,7 @@ export const customModel = (apiIdentifier: string) => {
       model = deepseek(apiIdentifier);
       break;
     case 'claude-3-haiku': 
-      model = haiku3Model;
+      model = openrouter_custom("anthropic/claude-3-haiku");
     case 'claude-3.5-haiku': 
     case 'claude-3.5-sonnet': 
     case 'claude-3.5-sonnet': 
