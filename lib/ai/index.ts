@@ -31,13 +31,13 @@ export const customModel = (apiIdentifier: string) => {
     case 'gpt-4o-mini':
       model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
       break;
-    case 'gpt-4o':
-      //model = openrouter.chatModel('openai/gpt-4o-2024-11-20');
-      break;
-    case 'o1':
-    case 'o1-mini':
-      //model = openrouter.chatModel('openai/'+apiIdentifier);
-      break;
+    //case 'gpt-4o':
+      //'openai/gpt-4o-2024-11-20';
+      //break;
+    //case 'o1':
+    //case 'o1-mini':
+      //'openai/'+apiIdentifier;
+      //break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
       model = google(apiIdentifier); // Using Google SDK for Gemini models
@@ -48,12 +48,12 @@ export const customModel = (apiIdentifier: string) => {
     case 'claude-3-haiku': 
       model = openrouter_custom("anthropic/claude-3-haiku");
       break;
-    case 'claude-3.5-haiku': 
-    case 'claude-3-sonnet': 
-    case 'claude-3.5-sonnet': 
-    case 'claude-3-opu': 
+    //case 'claude-3.5-haiku': 
+    //case 'claude-3-sonnet': 
+    //case 'claude-3.5-sonnet': 
+    //case 'claude-3-opu': 
       //TODO
-      break;
+      //break;
     default:
       model = groq(apiIdentifier);
       break;
