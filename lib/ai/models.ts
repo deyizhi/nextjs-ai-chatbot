@@ -25,11 +25,17 @@ export const models: Array<Model> = [
     apiIdentifier: 'gpt-4o-mini',
     description: 'Small model for fast, lightweight tasks',
   },
-    {
+  {
     id: 'deepseek-chat',
     label: 'Deepseek Chat',
     apiIdentifier: 'deepseek-chat',
     description: 'A powerful model for conversational tasks',
+  },
+  {
+    id: 'claude-3-haiku',
+    label: 'Claude 3 Haiku',
+    apiIdentifier: 'claude-3-haiku',
+    description: 'A fast and affordable model from Anthropic',
   },
   {
     id: 'gemini-1.5-flash',
