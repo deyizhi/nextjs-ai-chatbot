@@ -4,6 +4,7 @@ import { experimental_wrapLanguageModel as wrapLanguageModel } from 'ai';
 import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the correct import for the OpenAI object
 import { customMiddleware } from './custom-middleware';
 import { google } from '@ai-sdk/google';
+import { deepseek } from '@ai-sdk/deepseek';
 
 const openai_custom = createOpenAI({
   // custom settings, e.g.
@@ -21,7 +22,7 @@ export const customModel = (apiIdentifier: string) => {
       break;
     case 'gpt-3.5-turbo':
     case 'net-gpt-3.5-turbo':
-    case 'gpt-4o-mini':  
+    case 'gpt-4o-mini':
       model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
       break;
     case 'gpt-4o':
@@ -30,6 +31,9 @@ export const customModel = (apiIdentifier: string) => {
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
       model = google(apiIdentifier); // Using Google SDK for Gemini models
+      break;
+    case 'deepseek-chat':
+      model = deepseek(apiIdentifier);
       break;
     default:
       model = groq(apiIdentifier);
