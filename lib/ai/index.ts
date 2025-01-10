@@ -17,8 +17,6 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY ?? '',
 });
 
-const haiku3Model = openrouter.createChatModel('anthropic/claude-3-haiku');
-
 export const customModel = (apiIdentifier: string) => {
   let model;
   switch (apiIdentifier) {
@@ -45,7 +43,7 @@ export const customModel = (apiIdentifier: string) => {
       model = deepseek(apiIdentifier);
       break;
     case 'claude-3-haiku': 
-      model = haiku3Model;
+      model = openrouter("anthropic/claude-3-haiku");
     case 'claude-3.5-haiku': 
     case 'claude-3.5-sonnet': 
     case 'claude-3.5-sonnet': 
