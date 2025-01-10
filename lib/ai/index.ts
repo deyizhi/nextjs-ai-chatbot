@@ -47,8 +47,9 @@ export const customModel = (apiIdentifier: string) => {
       break;
     case 'claude-3-haiku': 
       model = openrouter("anthropic/claude-3-haiku");
+      break;
     case 'claude-3.5-haiku': 
-    case 'claude-3.5-sonnet': 
+    case 'claude-3-sonnet': 
     case 'claude-3.5-sonnet': 
     case 'claude-3-opu': 
       //TODO
