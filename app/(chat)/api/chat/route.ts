@@ -76,18 +76,28 @@ export async function POST(request: Request) {
     return new Response('No user message found', { status: 400 });
   }
 
+
+  const chatStartTime = Date.now();
   const chat = await getChatById({ id });
+  console.debug(`[DEBUG] Fetching chat by ID took ${Date.now() - chatStartTime}ms`);
 
   if (!chat) {
+    const titleStartTime = Date.now();
     const title = await generateTitleFromUserMessage({ message: userMessage });
+    console.debug(`[DEBUG] Title generation took ${Date.now() - titleStartTime}ms`);
+
+    const saveChatStartTime = Date.now();
     await saveChat({ id, userId: session.user.id, title });
+    console.debug(`[DEBUG] Saving new chat took ${Date.now() - saveChatStartTime}ms`);
   }
 
+  const saveMessagesStartTime = Date.now();
   await saveMessages({
     messages: [
       { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
     ],
   });
+  console.debug(`[DEBUG] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
 
   const streamingData = new StreamData();
   const result = await streamText({
@@ -101,6 +111,7 @@ export async function POST(request: Request) {
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
 
+          const saveResponseMessagesStartTime = Date.now();
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
               (message) => {
@@ -122,8 +133,9 @@ export async function POST(request: Request) {
               },
             ),
           });
+          console.debug(`[DEBUG] Saving assistant response messages took ${Date.now() - saveResponseMessagesStartTime}ms`);
         } catch (error) {
-          console.error('Failed to save chat');
+          console.error('Failed to save chat', error);
         }
       }
 
