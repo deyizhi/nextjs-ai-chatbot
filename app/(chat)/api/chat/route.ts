@@ -100,6 +100,7 @@ export async function POST(request: Request) {
   console.debug(`[DEBUG] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
 
   const streamingData = new StreamData();
+  const streamStartTime = Date.now();
   const result = await streamText({
     model: customModel(model.apiIdentifier),
     system: systemPrompt,
@@ -111,6 +112,7 @@ export async function POST(request: Request) {
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
 
+          console.debug(`[DEBUG] Streaming response took ${Date.now() - streamStartTime}ms`);  
           const saveResponseMessagesStartTime = Date.now();
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(

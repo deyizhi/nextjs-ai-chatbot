@@ -23,7 +23,7 @@ export async function generateTitleFromUserMessage({
   let truncatedMessage: CoreUserMessage = { role: 'user', content: truncatedText };
 
   const { text: title } = await generateText({
-    model: customModel('mixtral-8x7b-32768'),
+    model: customModel(process.env.TITLE_MODEL),
     system: `\n
     - you will generate a short title based on the first message a user begins a conversation with
     - ensure it is not more than 30 characters long
@@ -32,5 +32,5 @@ export async function generateTitleFromUserMessage({
     prompt: JSON.stringify(truncatedMessage),
   });
 
-  return title;
+  return `${title} ${new Date().toISOString()}`;
 }
