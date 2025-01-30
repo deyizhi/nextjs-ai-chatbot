@@ -34,7 +34,7 @@ export const models: Array<Model> = [
   {
     id: 'deepseek-reasoner',
     label: 'Deepseek R1',
-    apiIdentifier: 'deepseek-r1',
+    apiIdentifier: 'deepseek-reasoner',
     description: 'An advanced reasoning model for complex tasks',
   },
   {
