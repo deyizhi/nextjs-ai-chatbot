@@ -43,6 +43,7 @@ export const customModel = (apiIdentifier: string) => {
       model = google(apiIdentifier); // Using Google SDK for Gemini models
       break;
     case 'deepseek-chat':
+    case 'deepseek-r1':  
       model = deepseek(apiIdentifier);
       break;
     case 'claude-3-haiku': 

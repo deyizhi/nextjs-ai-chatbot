@@ -32,6 +32,12 @@ export const models: Array<Model> = [
     description: 'A powerful model for conversational tasks',
   },
   {
+    id: 'deepseek-r1',
+    label: 'Deepseek R1',
+    apiIdentifier: 'deepseek-r1',
+    description: 'An advanced reasoning model for complex tasks',
+  },
+  {
     id: 'claude-3-haiku',
     label: 'Claude 3 Haiku',
     apiIdentifier: 'claude-3-haiku',
