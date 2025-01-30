@@ -40,6 +40,7 @@ export const customModel = (apiIdentifier: string) => {
       //break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
+    case 'gemini-2.0-flash-thinking-exp-01-21':
       model = google(apiIdentifier); // Using Google SDK for Gemini models
       break;
     case 'deepseek-chat':

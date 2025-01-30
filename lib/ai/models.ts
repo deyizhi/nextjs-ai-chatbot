@@ -55,6 +55,12 @@ export const models: Array<Model> = [
     apiIdentifier: 'gemini-2.0-flash-exp',
     description: 'The latest advanced model from Google, offering enhanced capabilities and speed',
   },
+  {
+    id: 'gemini-2.0-flash-thinking-exp-01-21',
+    label: 'Google Gemini 2.0 Flash Thinking Exp',
+    apiIdentifier: 'gemini-2.0-flash-thinking-exp-01-21',
+    description: 'Google’s advanced reasoning model for complex and thoughtful tasks',
+  },
 ] as const;
 
 export const DEFAULT_MODEL_NAME: string = 'gpt-4o-mini';
