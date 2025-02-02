@@ -75,7 +75,7 @@ export default function Page() {
             如未註冊請先註冊
           </p>
           <p className="text-sm text-gray-500 dark:text-zinc-400">
-          Google account authentication login will support
+          We will support Google account authentication sign in
           </p>
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
