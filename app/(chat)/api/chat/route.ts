@@ -112,7 +112,7 @@ export async function POST(request: Request) {
           });
           console.debug(`[DEBUG] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
           
-          console.debug(`[DEBUG] Streaming response took ${Date.now() - streamStartTime}ms`);  
+          console.debug(`[DEBUG] ${model.apiIdentifier} Streaming response took ${Date.now() - streamStartTime}ms`);  
           const saveResponseMessagesStartTime = Date.now();
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
