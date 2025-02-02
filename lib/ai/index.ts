@@ -44,13 +44,13 @@ export const customModel = (apiIdentifier: string) => {
       model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
       break;
     case 'gpt-4o':
-      //model = openrouter_custom('openai/gpt-4o-2024-11-20');
-      model = openai_gpt4free('gpt-4o');
+      model = openrouter_custom('openai/gpt-4o-2024-11-20');
+      //model = openai_gpt4free('gpt-4o');
       break;
     //case 'o1':
     case 'o1-mini':
-      //model = openrouter_custom('openai/o1-mini'); 
-      model = openai_gpt4free('o1-mini');
+      model = openrouter_custom('openai/o1-mini'); 
+      //model = openai_gpt4free('o1-mini');
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
