@@ -33,5 +33,5 @@ export async function generateTitleFromUserMessage({
     prompt: JSON.stringify(truncatedMessage),
   });
 
-  return `${title} ${new Date().toISOString()}`;
+  return `${title} ${new Date().toISOString()} ${crypto.randomUUID()}`;
 }

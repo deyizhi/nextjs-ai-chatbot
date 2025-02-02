@@ -6,12 +6,19 @@ export interface Model {
   apiIdentifier: string;
   description: string;
 }
+
 export const models: Array<Model> = [
+//  {
+//    id: 'llama-3.2-90b-vision-preview',
+//    label: 'Llama 3.2 90B Vision',
+//    apiIdentifier: 'llama-3.2-90b-vision-preview',
+//    description: 'Advanced model with vision capabilities',
+//  },
   {
-    id: 'llama-3.2-90b-vision-preview',
-    label: 'Llama 3.2 90B Vision',
-    apiIdentifier: 'llama-3.2-90b-vision-preview',
-    description: 'Advanced model with vision capabilities',
+    id: 'gemini-2.0-flash-exp',
+    label: 'Google Gemini 2.0 Flash Exp',
+    apiIdentifier: 'gemini-2.0-flash-exp',
+    description: 'The latest advanced model from Google, offering enhanced capabilities and speed',
   },
   {
     id: 'gpt-3.5-turbo',
@@ -32,10 +39,16 @@ export const models: Array<Model> = [
     description: 'A powerful model for conversational tasks',
   },
   {
-    id: 'deepseek-reasoner',
+    id: 'deepseek-R1',
     label: 'Deepseek R1',
-    apiIdentifier: 'deepseek-reasoner',
+    apiIdentifier: 'deepseek-R1',
     description: 'An advanced reasoning model for complex tasks',
+  },
+  {
+    id: 'deepseek-r1-distill-llama-70b',
+    label: 'Deepseek R1 Distill Llama 70B',
+    apiIdentifier: 'deepseek-r1-distill-llama-70b',
+    description: 'A distilled version of the Deepseek R1 model, optimized for efficiency and performance',
   },
   {
     id: 'claude-3-haiku',
@@ -48,12 +61,6 @@ export const models: Array<Model> = [
     label: 'Google Gemini 1.5 Flash',
     apiIdentifier: 'gemini-1.5-flash',
     description: 'The previous generation of Google Gemini Flash models, offering a balance of power and speed',
-  },
-  {
-    id: 'gemini-2.0-flash-exp',
-    label: 'Google Gemini 2.0 Flash Exp',
-    apiIdentifier: 'gemini-2.0-flash-exp',
-    description: 'The latest advanced model from Google, offering enhanced capabilities and speed',
   },
   {
     id: 'gemini-2.0-flash-thinking-exp-01-21',

@@ -20,6 +20,12 @@ const openrouter_custom = createOpenAI({
   apiKey: process.env.OPENROUTER_API_KEY, 
 });
 
+const nvidia_custom = createOpenAI({
+  // custom settings, e.g.
+  baseURL: process.env.NVIDIA_API_URL, // Specify the base URL for OpenAI
+  apiKey: process.env.API_KEY_REQUIRED_IF_EXECUTING_OUTSIDE_NGC, 
+});
+
 export const customModel = (apiIdentifier: string) => {
   let model;
   switch (apiIdentifier) {
@@ -44,8 +50,17 @@ export const customModel = (apiIdentifier: string) => {
       model = google(apiIdentifier); // Using Google SDK for Gemini models
       break;
     case 'deepseek-chat':
-    case 'deepseek-reasoner':  
       model = deepseek(apiIdentifier);
+      break;
+    case 'deepseek-r1-distill-llama-70b':
+      model = groq("deepseek-r1-distill-llama-70b");
+      break;
+    case 'deepseek-R1':
+      model = Math.random() < 0.33 
+        ? openrouter_custom("deepseek/deepseek-r1:free") 
+        : Math.random() < 0.5 
+          ? nvidia_custom("deepseek-ai/deepseek-r1")
+          : deepseek("deepseek-reasoner");
       break;
     case 'claude-3-haiku': 
       model = openrouter_custom("anthropic/claude-3-haiku");
