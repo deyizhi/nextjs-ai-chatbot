@@ -56,10 +56,10 @@ export const customModel = (apiIdentifier: string) => {
       model = groq("deepseek-r1-distill-llama-70b");
       break;
     case 'deepseek-R1':
-      model = Math.random() < 0.33 
-        ? openrouter_custom("deepseek/deepseek-r1:free") 
+      model = Math.random() < 0.1 
+        ? nvidia_custom("deepseek-ai/deepseek-r1") 
         : Math.random() < 0.5 
-          ? nvidia_custom("deepseek-ai/deepseek-r1")
+          ? openrouter_custom("deepseek/deepseek-r1:free") 
           : deepseek("deepseek-reasoner");
       break;
     case 'claude-3-haiku': 
