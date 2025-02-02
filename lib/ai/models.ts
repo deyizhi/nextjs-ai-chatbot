@@ -22,16 +22,34 @@ export const models: Array<Model> = [
   },
   {
     id: 'gpt-3.5-turbo',
-    label: 'GPT-3.5 Turbo',
+    label: 'OpenAI GPT-3.5 Turbo',
     apiIdentifier: 'gpt-3.5-turbo',
-    description: 'A powerful model for conversational tasks',
+    description: 'OpenAI The earliest model',
   },
   {
     id: 'gpt-4o-mini',
-    label: 'GPT 4o mini',
+    label: 'OpenAI GPT 4o mini',
     apiIdentifier: 'gpt-4o-mini',
     description: 'Small model for fast, lightweight tasks',
   },
+  {
+    id: 'gpt-4o',
+    label: 'OpenAI GPT 4o',
+    apiIdentifier: 'gpt-4o',
+    description: 'A powerful model for conversational tasks',
+  },
+  {
+    id: 'o1-mini',
+    label: 'OpenAI OpenAI o1-mini',
+    apiIdentifier: 'o1-mini',
+    description: 'optimized for math, science, programming, and other STEM-related tasks.',
+  },
+  //{
+  //  id: 'o3-mini',
+  //  label: 'OpenAI o3-mini',
+  //  apiIdentifier: 'o3-mini',
+  //  description: 'A cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding',
+  //},
   {
     id: 'deepseek-chat',
     label: 'Deepseek Chat',
@@ -70,4 +88,4 @@ export const models: Array<Model> = [
   },
 ] as const;
 
-export const DEFAULT_MODEL_NAME: string = 'gpt-4o-mini';
+export const DEFAULT_MODEL_NAME: string = 'gemini-2.0-flash-exp';
