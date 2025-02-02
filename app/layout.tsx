@@ -1,15 +1,9 @@
-import type { Metadata } from 'next';
+
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '@/components/theme-provider';
 
 import './globals.css';
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://chat.vercel.ai'),
-  title: ' ',
-  description: ' ',
-};
 
 export const viewport = {
   maximumScale: 1, // Disable auto-zoom on mobile Safari
@@ -40,6 +34,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const privacyPolicyLink = process.env.NEXT_PUBLIC_PRIVACY_POLICY_LINK || '#';
+  const termsOfServiceLink = process.env.NEXT_PUBLIC_TERM_OF_SERVICE_LINK || '#';
+
   return (
     <html
       lang="en"
@@ -65,6 +62,7 @@ export default async function RootLayout({
         >
           <Toaster position="top-center" />
           {children}
+
         </ThemeProvider>
       </body>
     </html>

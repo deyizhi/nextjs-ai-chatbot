@@ -39,6 +39,30 @@ export default function Page() {
     formAction(formData);
   };
 
+  const privacyPolicyLink = process.env.NEXT_PUBLIC_PRIVACY_POLICY_LINK || '#';
+  const termsOfServiceLink = process.env.NEXT_PUBLIC_TERM_OF_SERVICE_LINK || '#';
+  
+  const handleGoogleLogin = () => {
+    // Open Google authentication popup with the correct Google OAuth URL
+    const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?';
+    const googleAuthWindow = window.open(
+      googleAuthUrl,
+      'Google Login',
+      'width=500,height=600'
+    );
+
+    if (googleAuthWindow) {
+      const interval = setInterval(() => {
+        if (googleAuthWindow.closed) {
+          clearInterval(interval);
+          router.refresh(); // Refresh the page after the popup is closed
+        }
+      }, 500);
+    } else {
+      toast.error('Failed to open Google login popup.');
+    }
+  };
+
   return (
     <div className="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl flex flex-col gap-12">
@@ -50,6 +74,7 @@ export default function Page() {
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton isSuccessful={isSuccessful}>Sign in</SubmitButton>
+
           <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
             {"Don't have an account? "}
             <Link
@@ -61,6 +86,26 @@ export default function Page() {
             {' for free.'}
           </p>
         </AuthForm>
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+        By signing in, you agree to our{' '}
+        <a
+          href={privacyPolicyLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-gray-800 dark:text-gray-200"
+        >
+          Privacy Policy
+        </a>{' '}
+        and{' '}
+        <a
+          href={termsOfServiceLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-gray-800 dark:text-gray-200"
+        >
+          Terms of Service
+        </a>.
+      </div>
       </div>
     </div>
   );

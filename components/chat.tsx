@@ -152,4 +152,4 @@ export function Chat({
       <BlockStreamHandler streamingData={streamingData} setBlock={setBlock} />
     </>
   );
-}
+  
