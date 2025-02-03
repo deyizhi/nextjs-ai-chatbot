@@ -86,6 +86,10 @@ export async function POST(request: Request) {
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id) {
         try {
+
+          if ("deepseek-R1" === model.apiIdentifier){
+            await new Promise(resolve => setTimeout(resolve, 20000));
+          }
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
 
