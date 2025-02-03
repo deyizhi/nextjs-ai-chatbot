@@ -31,8 +31,7 @@ const openai_gpt4free = createOpenAI({
   baseURL: process.env.OPENAI_URL_FREE, // Specify the base URL for OpenAI
   apiKey: process.env.OPENAI_API_KEY_FREE, 
 });
-
-export const customModel = (apiIdentifier: string) => {
+export const customModel = (apiIdentifier: string, optionalParam: string = '') => {
   let model;
   switch (apiIdentifier) {
     case 'grok-beta':
@@ -64,11 +63,10 @@ export const customModel = (apiIdentifier: string) => {
       model = groq("deepseek-r1-distill-llama-70b");
       break;
     case 'deepseek-R1':
-      model = Math.random() < 0.1 
+      model = Math.random() < 0.5 
         ? nvidia_custom("deepseek-ai/deepseek-r1") 
-        : Math.random() < 0.5 
-          ? openrouter_custom("deepseek/deepseek-r1:free") 
-          : deepseek("deepseek-reasoner");
+        : deepseek("deepseek-reasoner");
+          //openrouter_custom("deepseek/deepseek-r1:free") 
       break;
     case 'claude-3-haiku': 
       model = openrouter_custom("anthropic/claude-3-haiku");
