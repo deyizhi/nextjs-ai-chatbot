@@ -76,10 +76,29 @@ export async function POST(request: Request) {
     return new Response('No user message found', { status: 400 });
   }
 
+  //For R1
+  let providerMark;
+  if ('deepseek-R1' === model.apiIdentifier) {
+    const randomValue = Math.random();
+    if (randomValue < 0.05) {
+      providerMark = 'nvidia';
+    } 
+    //else if (randomValue < 0.10) {
+   //    providerMark = 'openrouter_free';
+   // } else if (randomValue < 0.20) {
+    else if (randomValue < 0.25) {
+      providerMark = 'deepseek';
+    } else if (randomValue < 0.80) {
+      providerMark = 'openrouter_standard';
+    } else {
+      providerMark = 'openrouter_nitro';
+    }
+  }
+
   const streamingData = new StreamData();
   const streamStartTime = Date.now();
   const result = await streamText({
-    model: customModel(model.apiIdentifier),
+    model: customModel(model.apiIdentifier, providerMark),
     system: systemPrompt,
     messages: coreMessages,
     maxSteps: 5,
