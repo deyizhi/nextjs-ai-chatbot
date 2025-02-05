@@ -21,12 +21,6 @@ export const models: Array<Model> = [
     description: 'The latest advanced model from Google, offering enhanced capabilities and speed',
   },
   {
-    id: 'gpt-3.5-turbo',
-    label: 'OpenAI GPT-3.5 Turbo',
-    apiIdentifier: 'gpt-3.5-turbo',
-    description: 'OpenAI The earliest model',
-  },
-  {
     id: 'gpt-4o-mini',
     label: 'OpenAI GPT 4o mini',
     apiIdentifier: 'gpt-4o-mini',
@@ -40,7 +34,7 @@ export const models: Array<Model> = [
   },
   {
     id: 'o1-mini',
-    label: 'OpenAI OpenAI o1-mini',
+    label: 'OpenAI o1-mini',
     apiIdentifier: 'o1-mini',
     description: 'optimized for math, science, programming, and other STEM-related tasks.',
   },
@@ -52,13 +46,13 @@ export const models: Array<Model> = [
   //},
   {
     id: 'deepseek-chat',
-    label: 'Deepseek Chat',
+    label: 'Deepseek-V3',
     apiIdentifier: 'deepseek-chat',
     description: 'A powerful model for conversational tasks',
   },
   {
     id: 'deepseek-R1',
-    label: 'Deepseek R1',
+    label: 'Deepseek R1 Full',
     apiIdentifier: 'deepseek-R1',
     description: 'An advanced reasoning model for complex tasks',
   },
@@ -73,12 +67,6 @@ export const models: Array<Model> = [
     label: 'Claude 3 Haiku',
     apiIdentifier: 'claude-3-haiku',
     description: 'A fast and affordable model from Anthropic',
-  },
-  {
-    id: 'gemini-1.5-flash',
-    label: 'Google Gemini 1.5 Flash',
-    apiIdentifier: 'gemini-1.5-flash',
-    description: 'The previous generation of Google Gemini Flash models, offering a balance of power and speed',
   },
   {
     id: 'gemini-2.0-flash-thinking-exp-01-21',
