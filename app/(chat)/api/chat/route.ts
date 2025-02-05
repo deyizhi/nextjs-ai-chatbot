@@ -82,13 +82,11 @@ export async function POST(request: Request) {
     const randomValue = Math.random();
     if (randomValue < 0.05) {
       providerMark = 'nvidia';
-    } 
-    //else if (randomValue < 0.10) {
-   //    providerMark = 'openrouter_free';
-   // } else if (randomValue < 0.20) {
-    else if (randomValue < 0.25) {
+    } else if (randomValue < 0.25) {
       providerMark = 'deepseek';
-    } else if (randomValue < 0.80) {
+    } else if (randomValue < 0.35) {
+      providerMark = 'together';
+    } else if (randomValue < 0.85) {
       providerMark = 'openrouter_standard';
     } else {
       providerMark = 'openrouter_nitro';

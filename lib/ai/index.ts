@@ -31,6 +31,14 @@ const openai_gpt4free = createOpenAI({
   baseURL: process.env.OPENAI_URL_FREE, // Specify the base URL for OpenAI
   apiKey: process.env.OPENAI_API_KEY_FREE, 
 });
+
+const openai_together = createOpenAI({
+  // custom settings, e.g.
+  baseURL: process.env.TOGETHER_API_URL,// Specify the base URL for OpenAI, 
+  apiKey: process.env.TOGETHER_API_KEY, 
+});
+
+
 export const customModel = (apiIdentifier: string, providerMark: string = '') => {
   let model;
   switch (apiIdentifier) {
@@ -78,6 +86,9 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
             break;
           case 'openrouter_nitro':
             model = openrouter_custom("deepseek/deepseek-r1:nitro");
+            break;
+          case 'together':
+            model = openai_together('deepseek-ai/DeepSeek-R1');
             break;
           default:
             model = deepseek("deepseek-reasoner");
