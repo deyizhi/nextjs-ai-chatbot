@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { auth } from '@/app/(auth)/auth';
 import { customModel } from '@/lib/ai';
 import { models } from '@/lib/ai/models';
-import { systemPrompt } from '@/lib/ai/prompts';
+import { systemPrompt,systemPromptR1 } from '@/lib/ai/prompts';
 import yahooFinance from 'yahoo-finance2';
 
 import {
@@ -92,10 +92,11 @@ export async function POST(request: Request) {
       providerMark = 'openrouter_nitro';
     }
   }
-
+ 
+/*
   if ('claude-3.5-sonnet' === model.apiIdentifier) {
     const prompt = messages.map(message => ({ role: message.role, content: message.content }));
-    console.log('Prompt generated:', prompt);
+    //console.log('Prompt generated:', prompt);
 
     const response = await fetch('https://www.bluewhitesun.uk:11337/v1/chat/completions', {
       method: 'POST',
@@ -106,7 +107,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         'model': "claude-3.5-sonnet",
         'messages': prompt,
-        //temperature: 0.9,
+        'temperature': 0.9,
       }),
     });
 
@@ -118,14 +119,14 @@ export async function POST(request: Request) {
     //console.log('responseData:', responseData);
     const content = responseData.choices[0].message.content;
 
-    console.log('content:', content);
+    //console.log('content:', content);
 
     const reader = new ReadableStream({
       start(controller) {
         const contentArray = content.split(' ');
         contentArray.forEach((word, index) => {
           //console.log(`${index}: "${word}"`);
-          controller.enqueue(`0: " ${word} "\n`);
+        controller.enqueue(`${index}: " ${word} "\n`);
         });
         controller.close();
       }
@@ -133,12 +134,17 @@ export async function POST(request: Request) {
     const stream = new Response(reader);
     return stream;
   }
+  */
+  let systemPromptTemp = systemPrompt;
+  if ('deepseek-r1-distill-llama-70b' === model.apiIdentifier|| 'deepseek-R1' === model.apiIdentifier) {
+    systemPromptTemp = systemPromptR1;
+  }
   
   const streamingData = new StreamData();
   const streamStartTime = Date.now();
   const result = await streamText({
     model: customModel(model.apiIdentifier, providerMark),
-    system: systemPrompt,
+    system: systemPromptTemp,
     messages: coreMessages,
     maxSteps: 5,
     onFinish: async ({ responseMessages }) => {
