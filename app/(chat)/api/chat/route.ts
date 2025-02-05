@@ -84,7 +84,7 @@ export async function POST(request: Request) {
       providerMark = 'nvidia';
     } else if (randomValue < 0.25) {
       providerMark = 'deepseek';
-    } else if (randomValue < 0.35) {
+    } else if (randomValue < 0.30) { // together probability changed to 5%
       providerMark = 'together';
     } else if (randomValue < 0.85) {
       providerMark = 'openrouter_standard';
