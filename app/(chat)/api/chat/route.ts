@@ -31,7 +31,7 @@ import {
 
 import { generateTitleFromUserMessage } from '../../actions';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 type AllowedTools =
   | 'createDocument'
@@ -93,6 +93,47 @@ export async function POST(request: Request) {
     }
   }
 
+  if ('claude-3.5-sonnet' === model.apiIdentifier) {
+    const prompt = messages.map(message => ({ role: message.role, content: message.content }));
+    console.log('Prompt generated:', prompt);
+
+    const response = await fetch('https://www.bluewhitesun.uk:11337/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer g4fapi-qscvbgrdsa1400`,
+      },
+      body: JSON.stringify({
+        'model': "claude-3.5-sonnet",
+        'messages': prompt,
+        //temperature: 0.9,
+      }),
+    });
+
+    if (!response.ok) {
+      return new Response('Error fetching from API', { status: response.status });
+    }
+    
+    const responseData = await response.json();
+    //console.log('responseData:', responseData);
+    const content = responseData.choices[0].message.content;
+
+    console.log('content:', content);
+
+    const reader = new ReadableStream({
+      start(controller) {
+        const contentArray = content.split(' ');
+        contentArray.forEach((word, index) => {
+          //console.log(`${index}: "${word}"`);
+          controller.enqueue(`0: " ${word} "\n`);
+        });
+        controller.close();
+      }
+    });
+    const stream = new Response(reader);
+    return stream;
+  }
+  
   const streamingData = new StreamData();
   const streamStartTime = Date.now();
   const result = await streamText({

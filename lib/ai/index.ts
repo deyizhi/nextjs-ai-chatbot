@@ -28,7 +28,7 @@ const nvidia_custom = createOpenAI({
 
 const openai_gpt4free = createOpenAI({
   // custom settings, e.g.
-  baseURL: process.env.OPENAI_URL_FREE, // Specify the base URL for OpenAI
+  anthropicApiUrl: process.env.OPENAI_URL_FREE, // Specify the base URL for OpenAI
   apiKey: process.env.OPENAI_API_KEY_FREE, 
 });
 
@@ -100,7 +100,9 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
       break;
     //case 'claude-3.5-haiku': 
     //case 'claude-3-sonnet': 
-    //case 'claude-3.5-sonnet': 
+    case 'claude-3.5-sonnet': 
+       model = openai_gpt4free("claude-3.5-sonnet");
+      break;
     //case 'claude-3-opu': 
       //TODO
       //break;

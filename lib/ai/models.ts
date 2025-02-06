@@ -69,6 +69,12 @@ export const models: Array<Model> = [
     description: 'A fast and affordable model from Anthropic',
   },
   {
+    id: 'claude-3.5-sonnet',
+    label: 'claude-3.5-sonnet slow beta',
+    apiIdentifier: 'claude-3.5-sonnet',
+    description: 'A efficiency model from Anthropic',
+  },
+  {
     id: 'gemini-2.0-flash-thinking-exp-01-21',
     label: 'Google Gemini 2.0 Flash Thinking Exp',
     apiIdentifier: 'gemini-2.0-flash-thinking-exp-01-21',
