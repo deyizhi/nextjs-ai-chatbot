@@ -64,7 +64,7 @@ export const models: Array<Model> = [
   },
   {
     id: 'claude-3.5-haiku',
-    label: 'Claude 3 Haiku',
+    label: 'Claude 3.5 Haiku',
     apiIdentifier: 'claude-3.5-haiku',
     description: 'A fast and affordable model from Anthropic',
   },
