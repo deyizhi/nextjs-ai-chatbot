@@ -63,9 +63,9 @@ export const models: Array<Model> = [
     description: 'A distilled version of the Deepseek R1 model, optimized for efficiency and performance',
   },
   {
-    id: 'claude-3-haiku',
+    id: 'claude-3.5-haiku',
     label: 'Claude 3 Haiku',
-    apiIdentifier: 'claude-3-haiku',
+    apiIdentifier: 'claude-3.5-haiku',
     description: 'A fast and affordable model from Anthropic',
   },
   /*
