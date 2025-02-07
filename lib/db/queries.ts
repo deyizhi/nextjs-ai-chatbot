@@ -36,10 +36,15 @@ const client = postgres(postgresUrl, {
 const db = drizzle(client);
 
 export async function getUser(email: string): Promise<Array<User>> {
+  const startTime = new Date();
   try {
     return await db.select().from(user).where(eq(user.email, email));
   } catch (error) {
-    console.error('Failed to get user from database');
+    console.error('Failed to get user from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
@@ -47,6 +52,7 @@ export async function getUser(email: string): Promise<Array<User>> {
 export async function createUser(email: string, password: string) {
   const salt = genSaltSync(10);
   const hash = hashSync(password, salt);
+  const startTime = new Date();
 
   try {
     return await db.insert(user).values({ email, password: hash });
@@ -54,10 +60,10 @@ export async function createUser(email: string, password: string) {
     console.error('Failed to create user in database', {
       error,
       email,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
     });
     throw error;
-    
   }
 }
 
@@ -70,6 +76,7 @@ export async function saveChat({
   userId: string;
   title: string;
 }) {
+  const startTime = new Date();
   try {
     return await db.insert(chat).values({
       id,
@@ -78,24 +85,34 @@ export async function saveChat({
       title,
     });
   } catch (error) {
-    console.error('Failed to save chat in database');
+    console.error('Failed to save chat in database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function deleteChatById({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     await db.delete(vote).where(eq(vote.chatId, id));
     await db.delete(message).where(eq(message.chatId, id));
 
     return await db.delete(chat).where(eq(chat.id, id));
   } catch (error) {
-    console.error('Failed to delete chat by id from database');
+    console.error('Failed to delete chat by id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getChatsByUserId({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     return await db
       .select()
@@ -103,31 +120,46 @@ export async function getChatsByUserId({ id }: { id: string }) {
       .where(eq(chat.userId, id))
       .orderBy(desc(chat.createdAt));
   } catch (error) {
-    console.error('Failed to get chats by user from database');
+    console.error('Failed to get chats by user from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getChatById({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     const [selectedChat] = await db.select().from(chat).where(eq(chat.id, id));
     return selectedChat;
   } catch (error) {
-    console.error('Failed to get chat by id from database');
+    console.error('Failed to get chat by id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function saveMessages({ messages }: { messages: Array<Message> }) {
+  const startTime = new Date();
   try {
     return await db.insert(message).values(messages);
   } catch (error) {
-    console.error('Failed to save messages in database', error);
+    console.error('Failed to save messages in database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getMessagesByChatId({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     return await db
       .select()
@@ -135,7 +167,11 @@ export async function getMessagesByChatId({ id }: { id: string }) {
       .where(eq(message.chatId, id))
       .orderBy(asc(message.createdAt));
   } catch (error) {
-    console.error('Failed to get messages by chat id from database', error);
+    console.error('Failed to get messages by chat id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
@@ -149,6 +185,7 @@ export async function voteMessage({
   messageId: string;
   type: 'up' | 'down';
 }) {
+  const startTime = new Date();
   try {
     const [existingVote] = await db
       .select()
@@ -167,16 +204,25 @@ export async function voteMessage({
       isUpvoted: type === 'up',
     });
   } catch (error) {
-    console.error('Failed to upvote message in database', error);
+    console.error('Failed to upvote message in database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getVotesByChatId({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     return await db.select().from(vote).where(eq(vote.chatId, id));
   } catch (error) {
-    console.error('Failed to get votes by chat id from database', error);
+    console.error('Failed to get votes by chat id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
@@ -192,6 +238,7 @@ export async function saveDocument({
   content: string;
   userId: string;
 }) {
+  const startTime = new Date();
   try {
     return await db.insert(document).values({
       id,
@@ -201,12 +248,17 @@ export async function saveDocument({
       createdAt: new Date(),
     });
   } catch (error) {
-    console.error('Failed to save document in database');
+    console.error('Failed to save document in database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getDocumentsById({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     const documents = await db
       .select()
@@ -216,12 +268,17 @@ export async function getDocumentsById({ id }: { id: string }) {
 
     return documents;
   } catch (error) {
-    console.error('Failed to get document by id from database');
+    console.error('Failed to get document by id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
 
 export async function getDocumentById({ id }: { id: string }) {
+  const startTime = new Date();
   try {
     const [selectedDocument] = await db
       .select()
@@ -231,7 +288,11 @@ export async function getDocumentById({ id }: { id: string }) {
 
     return selectedDocument;
   } catch (error) {
-    console.error('Failed to get document by id from database');
+    console.error('Failed to get document by id from database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
@@ -243,6 +304,7 @@ export async function deleteDocumentsByIdAfterTimestamp({
   id: string;
   timestamp: Date;
 }) {
+  const startTime = new Date();
   try {
     await db
       .delete(suggestion)
@@ -259,6 +321,11 @@ export async function deleteDocumentsByIdAfterTimestamp({
   } catch (error) {
     console.error(
       'Failed to delete documents by id after timestamp from database',
+      {
+        error,
+        timestamp: new Date().toISOString(),
+        duration: new Date().getTime() - startTime.getTime() + 'ms'
+      }
     );
     throw error;
   }
@@ -269,10 +336,15 @@ export async function saveSuggestions({
 }: {
   suggestions: Array<Suggestion>;
 }) {
+  const startTime = new Date();
   try {
     return await db.insert(suggestion).values(suggestions);
   } catch (error) {
-    console.error('Failed to save suggestions in database');
+    console.error('Failed to save suggestions in database', {
+      error,
+      timestamp: new Date().toISOString(),
+      duration: new Date().getTime() - startTime.getTime() + 'ms'
+    });
     throw error;
   }
 }
@@ -282,6 +354,7 @@ export async function getSuggestionsByDocumentId({
 }: {
   documentId: string;
 }) {
+  const startTime = new Date();
   try {
     return await db
       .select()
@@ -290,6 +363,11 @@ export async function getSuggestionsByDocumentId({
   } catch (error) {
     console.error(
       'Failed to get suggestions by document version from database',
+      {
+        error,
+        timestamp: new Date().toISOString(),
+        duration: new Date().getTime() - startTime.getTime() + 'ms'
+      }
     );
     throw error;
   }
