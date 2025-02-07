@@ -124,6 +124,10 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
       break;
   }
 
+  if (!model) {
+    model = groq(apiIdentifier);
+  }
+
   return wrapLanguageModel({
     model,
     middleware: customMiddleware,
