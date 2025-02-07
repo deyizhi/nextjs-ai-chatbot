@@ -111,8 +111,9 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
     case 'claude-3.5-haiku': 
       model = openrouter_custom("anthropic/claude-3.5-haiku");
       break;
-    //case 'claude-3.5-haiku': 
-    //case 'claude-3-sonnet': 
+    case 'claude-3-sonnet': 
+      model = openrouter_custom("anthropic/claude-3-sonnet");
+      break;
     case 'claude-3.5-sonnet': 
        //model = openai_gpt4free("claude-3.5-sonnet");
       break;

@@ -68,6 +68,12 @@ export const models: Array<Model> = [
     apiIdentifier: 'claude-3.5-haiku',
     description: 'A fast and affordable model from Anthropic',
   },
+  {
+    id: 'claude-3-sonnet',
+    label: 'claude-3-sonnet',
+    apiIdentifier: 'claude-3-sonnet',
+    description: 'A efficiency model from Anthropic',
+  },
   /*
   {
     id: 'claude-3.5-sonnet',
