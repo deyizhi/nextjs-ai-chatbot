@@ -38,6 +38,12 @@ const openai_together = createOpenAI({
   apiKey: process.env.TOGETHER_API_KEY, 
 });
 
+const openai_sambanova = createOpenAI({
+  // custom settings, e.g.
+  baseURL: process.env.SAMBANOVA_API_URL,// Specify the base URL for OpenAI, 
+  apiKey: process.env.SAMBANOVA_API_KEY, 
+});
+
 
 export const customModel = (apiIdentifier: string, providerMark: string = '') => {
   let model;
@@ -68,7 +74,14 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
       model = deepseek(apiIdentifier);
       break;
     case 'deepseek-r1-distill-llama-70b':
-      model = groq("deepseek-r1-distill-llama-70b");
+      switch (providerMark) {
+        case 'sambanova':
+          model = openai_sambanova("DeepSeek-R1-Distill-Llama-70B");
+          break;
+        default:
+          model = groq("deepseek-r1-distill-llama-70b");
+          break;  
+      }
       break;
     case 'deepseek-R1':
         switch (providerMark) {

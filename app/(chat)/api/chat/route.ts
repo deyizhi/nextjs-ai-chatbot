@@ -77,7 +77,7 @@ export async function POST(request: Request) {
   }
 
   //For R1
-  let providerMark;
+  let providerMark = '';
   if ('deepseek-R1' === model.apiIdentifier) {
     const randomValue = Math.random();
     if (randomValue < 0.05) {
@@ -91,50 +91,10 @@ export async function POST(request: Request) {
     } else {
       providerMark = 'openrouter_nitro';
     }
+  } else if ('deepseek-r1-distill-llama-70b' === model.apiIdentifier) {
+    providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
   }
  
-/*
-  if ('claude-3.5-sonnet' === model.apiIdentifier) {
-    const prompt = messages.map(message => ({ role: message.role, content: message.content }));
-    //console.log('Prompt generated:', prompt);
-
-    const response = await fetch('https://www.bluewhitesun.uk:11337/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer g4fapi-qscvbgrdsa1400`,
-      },
-      body: JSON.stringify({
-        'model': "claude-3.5-sonnet",
-        'messages': prompt,
-        'temperature': 0.9,
-      }),
-    });
-
-    if (!response.ok) {
-      return new Response('Error fetching from API', { status: response.status });
-    }
-    
-    const responseData = await response.json();
-    //console.log('responseData:', responseData);
-    const content = responseData.choices[0].message.content;
-
-    //console.log('content:', content);
-
-    const reader = new ReadableStream({
-      start(controller) {
-        const contentArray = content.split(' ');
-        contentArray.forEach((word, index) => {
-          //console.log(`${index}: "${word}"`);
-        controller.enqueue(`${index}: " ${word} "\n`);
-        });
-        controller.close();
-      }
-    });
-    const stream = new Response(reader);
-    return stream;
-  }
-  */
   let systemPromptTemp = systemPrompt;
   if ('deepseek-r1-distill-llama-70b' === model.apiIdentifier|| 'deepseek-R1' === model.apiIdentifier) {
     systemPromptTemp = systemPromptR1;
@@ -153,7 +113,6 @@ export async function POST(request: Request) {
           
           const responseMessagesWithoutIncompleteToolCalls =
             sanitizeResponseMessages(responseMessages);
-
 
           const chatStartTime = Date.now();
           const chat = await getChatById({ id });
@@ -177,7 +136,7 @@ export async function POST(request: Request) {
           });
           console.debug(`[DEBUG] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
           
-          console.debug(`[DEBUG] ${model.apiIdentifier} Streaming response took ${Date.now() - streamStartTime}ms`);  
+          console.debug(`[DEBUG] ${model.apiIdentifier} ${providerMark} Streaming response took ${Date.now() - streamStartTime}ms`);  
           const saveResponseMessagesStartTime = Date.now();
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
