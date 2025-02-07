@@ -99,7 +99,6 @@ export async function POST(request: Request) {
   if ('deepseek-r1-distill-llama-70b' === model.apiIdentifier|| 'deepseek-R1' === model.apiIdentifier) {
     systemPromptTemp = systemPromptR1;
   }
-  
   const streamingData = new StreamData();
   const streamStartTime = Date.now();
   const result = await streamText({
@@ -116,16 +115,16 @@ export async function POST(request: Request) {
 
           const chatStartTime = Date.now();
           const chat = await getChatById({ id });
-          console.debug(`[DEBUG] Fetching chat by ID took ${Date.now() - chatStartTime}ms`);
+          console.debug(`[DEBUG] [${new Date().toISOString()}] Fetching chat by ID took ${Date.now() - chatStartTime}ms`);
         
           if (!chat) {
             const titleStartTime = Date.now();
             const title = await generateTitleFromUserMessage({ message: userMessage });
-            console.debug(`[DEBUG] Title generation took ${Date.now() - titleStartTime}ms`);
+            console.debug(`[DEBUG] [${new Date().toISOString()}] Title generation took ${Date.now() - titleStartTime}ms`);
         
             const saveChatStartTime = Date.now();
             await saveChat({ id, userId: session.user.id, title });
-            console.debug(`[DEBUG] Saving new chat took ${Date.now() - saveChatStartTime}ms`);
+            console.debug(`[DEBUG] [${new Date().toISOString()}] Saving new chat took ${Date.now() - saveChatStartTime}ms`);
           }
         
           const saveMessagesStartTime = Date.now();
@@ -134,9 +133,9 @@ export async function POST(request: Request) {
               { ...userMessage, id: generateUUID(), createdAt: new Date(), chatId: id },
             ],
           });
-          console.debug(`[DEBUG] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
+          console.debug(`[DEBUG] [${new Date().toISOString()}] Saving user message took ${Date.now() - saveMessagesStartTime}ms`);
           
-          console.debug(`[DEBUG] ${model.apiIdentifier} ${providerMark} Streaming response took ${Date.now() - streamStartTime}ms`);  
+          console.debug(`[DEBUG] [${new Date().toISOString()}] ${model.apiIdentifier} ${providerMark} Streaming response took ${Date.now() - streamStartTime}ms`);  
           const saveResponseMessagesStartTime = Date.now();
           await saveMessages({
             messages: responseMessagesWithoutIncompleteToolCalls.map(
@@ -159,9 +158,9 @@ export async function POST(request: Request) {
               },
             ),
           });
-          console.debug(`[DEBUG] Saving assistant response messages took ${Date.now() - saveResponseMessagesStartTime}ms`);
+          console.debug(`[DEBUG] [${new Date().toISOString()}] Saving assistant response messages took ${Date.now() - saveResponseMessagesStartTime}ms`);
         } catch (error) {
-          console.error('Failed to save chat', error);
+          console.error(`[ERROR] [${new Date().toISOString()}] Failed to save chat`, error);
         }
       }
 
