@@ -44,6 +44,11 @@ const openai_sambanova = createOpenAI({
   apiKey: process.env.SAMBANOVA_API_KEY, 
 });
 
+const openai_official = createOpenAI({
+  // custom settings, e.g.
+  baseURL: process.env.OPENAI_API_URL_OFFICIAL, // Specify the base URL for OpenAI
+  apiKey: process.env.OPENAI_API_KEY_OFFICIAL, 
+});
 
 export const customModel = (apiIdentifier: string, providerMark: string = '') => {
   let model;
@@ -64,6 +69,9 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
     case 'o1-mini':
       model = openrouter_custom('openai/o1-mini'); 
       //model = openai_gpt4free('o1-mini');
+      break;
+    case 'o3-mini':
+      model = openai_official('o3-mini'); 
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
