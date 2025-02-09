@@ -96,9 +96,6 @@ export async function POST(request: Request) {
   }
  
   let systemPromptTemp = systemPrompt;
-  if ('deepseek-r1-distill-llama-70b' === model.apiIdentifier|| 'deepseek-R1' === model.apiIdentifier) {
-    systemPromptTemp = systemPromptR1;
-  }
   const streamingData = new StreamData();
   const streamStartTime = Date.now();
   const result = await streamText({

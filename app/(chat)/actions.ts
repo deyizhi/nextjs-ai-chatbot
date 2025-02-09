@@ -29,7 +29,7 @@ export async function generateTitleFromUserMessage({
     - ensure it is not more than 30 characters long
     - the title should be a summary of the user's message
     - do not use quotes or colons
-    - the output language should match the input prompt's language`,
+    - the output's language should match the input user prompt's language`,
     prompt: JSON.stringify(truncatedMessage),
   });
 
