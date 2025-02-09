@@ -38,12 +38,12 @@ export const models: Array<Model> = [
     apiIdentifier: 'o1-mini',
     description: 'optimized for math, science, programming, and other STEM-related tasks.',
   },
-  {
-    id: 'o3-mini',
-    label: 'OpenAI o3-mini',
-    apiIdentifier: 'o3-mini',
-    description: 'A cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding',
-  },
+//  {
+//    id: 'o3-mini',
+//    label: 'OpenAI o3-mini',
+//    apiIdentifier: 'o3-mini',
+//    description: 'A cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding',
+//  },
   {
     id: 'deepseek-chat',
     label: 'Deepseek-V3',
