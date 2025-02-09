@@ -70,7 +70,7 @@ export const models: Array<Model> = [
   },
   {
     id: 'claude-3-sonnet',
-    label: 'claude-3-sonnet',
+    label: 'Claude 3 sonnet',
     apiIdentifier: 'claude-3-sonnet',
     description: 'A efficiency model from Anthropic',
   },
