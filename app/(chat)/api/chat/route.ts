@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { auth } from '@/app/(auth)/auth';
 import { customModel } from '@/lib/ai';
 import { models } from '@/lib/ai/models';
-import { systemPrompt,systemPromptR1 } from '@/lib/ai/prompts';
+import { systemPrompt } from '@/lib/ai/prompts';
 import yahooFinance from 'yahoo-finance2';
 
 import {
