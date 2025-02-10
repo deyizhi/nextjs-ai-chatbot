@@ -5,6 +5,7 @@ import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the co
 import { customMiddleware } from './custom-middleware';
 import { google } from '@ai-sdk/google';
 import { deepseek } from '@ai-sdk/deepseek';
+import { createAnthropic } from '@ai-sdk/anthropic';
 //import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 //import { openrouter } from "@openrouter/ai-sdk-provider";
 
@@ -50,6 +51,11 @@ const openai_official = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY_OFFICIAL, 
 });
 
+const anthropic_official = createAnthropic({
+  baseURL: process.env.ANTHROPIC_URL,
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
 export const customModel = (apiIdentifier: string, providerMark: string = '') => {
   let model;
   switch (apiIdentifier) {
@@ -62,13 +68,14 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
       model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
       break;
     case 'gpt-4o':
-      model = openrouter_custom('openai/gpt-4o-2024-11-20');
+      model = openai_official('openai/gpt-4o-2024-11-20');
       //model = openai_gpt4free('gpt-4o');
       break;
     //case 'o1':
     case 'o1-mini':
       model = openrouter_custom('openai/o1-mini'); 
       //model = openai_gpt4free('o1-mini');
+      //o1min不能使用azure 太贵
       break;
     case 'o3-mini':
       model = openai_official('o3-mini'); 
@@ -117,13 +124,16 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
         }
       break;
     case 'claude-3.5-haiku': 
-      model = openrouter_custom("anthropic/claude-3.5-haiku");
+      //model = openrouter_custom("anthropic/claude-3.5-haiku");
+      model = anthropic_official("claude-3-5-haiku-20241022");
       break;
     case 'claude-3-sonnet': 
-      model = openrouter_custom("anthropic/claude-3-sonnet");
+      //model = openrouter_custom("anthropic/claude-3-sonnet");
+      model = anthropic_official("claude-3-sonnet-20240229");
       break;
     case 'claude-3.5-sonnet': 
        //model = openai_gpt4free("claude-3.5-sonnet");
+      model = anthropic_official("claude-3-5-sonnet-20241022");
       break;
     //case 'claude-3-opu': 
       //TODO

@@ -18,6 +18,7 @@
     "db:up": "drizzle-kit up"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "1.0.0-canary.3",
     "@ai-sdk/deepseek": "^0.0.3",
     "@ai-sdk/google": "^1.0.12",
     "@ai-sdk/groq": "^1.0.1",
