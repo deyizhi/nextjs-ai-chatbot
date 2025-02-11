@@ -65,20 +65,18 @@ export const customModel = (apiIdentifier: string, providerMark: string = '') =>
       break;
     case 'gpt-3.5-turbo':
     case 'gpt-4o-mini':
-      model = openai_custom(apiIdentifier); // Using the OpenAI object for these models
+      model = openai_custom(apiIdentifier); 
       break;
     case 'gpt-4o':
-      model = openai_official('openai/gpt-4o-2024-11-20');
-      //model = openai_gpt4free('gpt-4o');
+      model = openai_official('gpt-4o-2024-11-20');
       break;
     //case 'o1':
     case 'o1-mini':
-      model = openrouter_custom('openai/o1-mini'); 
-      //model = openai_gpt4free('o1-mini');
       //o1min不能使用azure 太贵
+      model = openai_official('o1-mini-2024-09-12'); 
       break;
     case 'o3-mini':
-      model = openai_official('o3-mini'); 
+      model = openai_official('o3-mini-2025-01-31'); 
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
