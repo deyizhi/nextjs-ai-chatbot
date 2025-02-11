@@ -100,7 +100,7 @@ export async function POST(request: Request) {
   const streamStartTime = Date.now();
   const result = await streamText({
     model: customModel(model.apiIdentifier, providerMark),
-    system: systemPromptTemp,
+    system: ('o1-mini' === model.apiIdentifier) ? undefined : systemPromptTemp,
     messages: coreMessages,
     maxSteps: 5,
     onFinish: async ({ responseMessages }) => {
