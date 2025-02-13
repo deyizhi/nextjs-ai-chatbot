@@ -13,7 +13,14 @@ CREATE TABLE IF NOT EXISTS "Vote" (
 	CONSTRAINT "Vote_chatId_messageId_pk" PRIMARY KEY("chatId","messageId")
 );
 DO $$ BEGIN
-    ALTER TABLE "Chat" ADD COLUMN "title" text NOT NULL;
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM information_schema.columns 
+        WHERE table_name = 'Chat' 
+        AND column_name = 'title'
+    ) THEN
+        ALTER TABLE "Chat" ADD COLUMN "title" text NOT NULL;
+    END IF;
 EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
