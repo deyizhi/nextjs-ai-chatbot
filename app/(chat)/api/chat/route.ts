@@ -49,8 +49,7 @@ export async function POST(request: Request) {
         system: ('o1-mini' === selectedChatModel) ? undefined : systemPrompt({ selectedChatModel }),
         messages,
         maxSteps: 5,
-        experimental_activeTools:
-        isReasoningModel(selectedChatModel) ? []
+        experimental_activeTools:  isReasoningModel(selectedChatModel) ? []
             : [
                 'getWeather',
                 'createDocument',
@@ -76,11 +75,11 @@ export async function POST(request: Request) {
                 reasoning,
               });
 
-              
               const userMessage = getMostRecentUserMessage(messages);
 
               if (!userMessage) {
-                return new Response('No user message found', { status: 400 });
+                console.error('No user message found');
+                return;
               }
 
               const chat = await getChatById({ id });
@@ -106,7 +105,7 @@ export async function POST(request: Request) {
                 }),
               });
             } catch (error) {
-              console.error('Failed to save chat');
+              console.error('Failed to save chat', error);
             }
           }
         },

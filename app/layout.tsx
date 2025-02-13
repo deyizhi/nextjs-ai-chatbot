@@ -6,10 +6,55 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: '',
-  title: '',
-  description: '',
+  metadataBase: new URL('https://www.queryany.com'), // Replace with your actual domain
+  title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
+  description: 'Use leading AI models like DeepSeek R1,GPT, Claude and Gemini2 to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
+  keywords: ['AI Search', 'Large Language Models', 'GPT', 'Claude', 'Bard', 'Artificial Intelligence', 'Search Engine', 'Information Retrieval', 'Knowledge Base', 'Question Answering'],
+  openGraph: {
+    title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
+    description: 'Use leading AI models like GPT, Claude, and Bard to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
+    url: 'https://www.queryany.com', // Replace with your actual domain
+    siteName: 'AI Search',
+    images: [
+      '/og-image.png', // Replace with your Open Graph image path, recommended size 1200x630
+    ],
+    locale: 'en_US', // Set to English (US)
+    type: 'website',
+  },
+ // twitter: {
+  //  card: 'summary_large_image',
+  //  title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
+  //  description: 'Use leading AI models like GPT, Claude, and Bard to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
+   // site: '@JohnWhiteSun', // Replace with your Twitter username
+   // creator: '@JohnWhiteSun', // Replace with your Twitter username
+  //  images: [
+   //   '/twitter-image.png', // Replace with your Twitter image path, recommended size 800x418
+  //  ],
+ // },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': 'large',
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+ // icons: {
+   // icon: '/favicon.ico', // Replace with your favicon path
+  //  apple: '/apple-touch-icon.png', // Replace with your Apple Touch Icon path
+  //},
+  // Other Metadata options, such as viewport, theme-color, etc.
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  themeColor: '#ffffff', // Replace with your website theme color
 };
+
 
 export const viewport = {
   maximumScale: 1, // Disable auto-zoom on mobile Safari
