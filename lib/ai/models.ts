@@ -30,7 +30,7 @@ export const myProvider = customProvider({
     'deepseek-R1':  customModel('deepseek-R1'),
     'deepseek-r1-distill-llama-70b': customModel('deepseek-r1-distill-llama-70b'),
     'claude-3.5-haiku': customModel('claude-3.5-haiku'),
-    'claude-3-sonnet': customModel('claude-3-sonnet'),
+    'claude-3.5-sonnet0620': customModel('claude-3.5-sonnet0620'),
     'title-model': openai_custom('gpt-4o-mini'),
     'block-model': openai_custom('gpt-4o-mini'),
   },
@@ -88,8 +88,8 @@ export const chatModels: Array<ChatModel> = [
     description: 'A fast and affordable model from Anthropic',
   },
   {
-    id: 'claude-3-sonnet',
-    name: 'Claude 3 sonnet',
+    id: 'claude-3.5-sonnet0620',
+    name: 'Claude 3.5 sonnet 0620',
     description: 'A efficiency model from Anthropic',
   },
   {

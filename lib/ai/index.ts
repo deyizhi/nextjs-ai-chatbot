@@ -142,9 +142,9 @@ export const customModel = (modelId: string) => {
       //model = openrouter_custom("anthropic/claude-3.5-haiku");
       model = anthropic_official("claude-3-5-haiku-20241022");
       break;
-    case 'claude-3-sonnet': 
+    case 'claude-3.5-sonnet0620': 
       //model = openrouter_custom("anthropic/claude-3-sonnet");
-      model = anthropic_official("claude-3-sonnet-20240229");
+      model = anthropic_official("claude-3-5-sonnet-20240620");
       break;
     case 'claude-3.5-sonnet': 
        //model = openai_gpt4free("claude-3.5-sonnet");
