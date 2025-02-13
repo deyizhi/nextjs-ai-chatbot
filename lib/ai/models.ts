@@ -1,4 +1,4 @@
-import { openai } from '@ai-sdk/openai';
+import { openai, createOpenAI } from '@ai-sdk/openai';
 import { fireworks } from '@ai-sdk/fireworks';
 import {
   customProvider,
@@ -6,22 +6,28 @@ import {
   wrapLanguageModel,
 } from 'ai';
 
+const openai_custom = createOpenAI({
+  // custom settings, e.g.
+  baseURL: process.env.OPENAI_URL_CUSTOM, // Specify the base URL for OpenAI
+  apiKey: process.env.OPENAI_API_KEY_CUSTOM, 
+});
+
 export const DEFAULT_CHAT_MODEL: string = 'chat-model-small';
 
 export const myProvider = customProvider({
   languageModels: {
-    'chat-model-small': openai('gpt-4o-mini'),
-    'chat-model-large': openai('gpt-4o'),
+    'chat-model-small': openai_custom('gpt-4o-mini'),
+    'chat-model-large': openai_custom('gpt-4o'),
     'chat-model-reasoning': wrapLanguageModel({
       model: fireworks('accounts/fireworks/models/deepseek-r1'),
       middleware: extractReasoningMiddleware({ tagName: 'think' }),
     }),
-    'title-model': openai('gpt-4-turbo'),
-    'block-model': openai('gpt-4o-mini'),
+    'title-model': openai_custom('gpt-4-turbo'),
+    'block-model': openai_custom('gpt-4o-mini'),
   },
   imageModels: {
-    'small-model': openai.image('dall-e-2'),
-    'large-model': openai.image('dall-e-3'),
+    'small-model': openai_custom.image('dall-e-2'),
+    'large-model': openai_custom.image('dall-e-3'),
   },
 });
 
