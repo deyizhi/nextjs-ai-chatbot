@@ -10,17 +10,17 @@ export const metadata: Metadata = {
   title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
   description: 'Use leading AI models like DeepSeek R1,GPT, Claude and Gemini2 to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
   keywords: ['AI Search', 'Large Language Models', 'GPT', 'Claude', 'Bard', 'Artificial Intelligence', 'Search Engine', 'Information Retrieval', 'Knowledge Base', 'Question Answering'],
-  openGraph: {
-    title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
-    description: 'Use leading AI models like GPT, Claude, and Bard to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
-    url: 'https://www.queryany.com', // Replace with your actual domain
-    siteName: 'AI Search',
-    images: [
-      '/og-image.png', // Replace with your Open Graph image path, recommended size 1200x630
-    ],
-    locale: 'en_US', // Set to English (US)
-    type: 'website',
-  },
+  //openGraph: {
+  //  title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
+   // description: 'Use leading AI models like GPT, Claude, and Bard to quickly and accurately search for the content you need. Say goodbye to information overload and efficiently get the information you want.',
+   // url: 'https://www.queryany.com', // Replace with your actual domain
+   // siteName: 'AI Search',
+    //images: [
+    //  '/og-image.png', // Replace with your Open Graph image path, recommended size 1200x630
+   // ],
+   // locale: 'en_US', // Set to English (US)
+   // type: 'website',
+ // },
  // twitter: {
   //  card: 'summary_large_image',
   //  title: 'AI Search - Aggregate Leading AI Models for All Your Information Needs',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
-  themeColor: '#ffffff', // Replace with your website theme color
+  //themeColor: '#ffffff', // Replace with your website theme color
 };
 
 
