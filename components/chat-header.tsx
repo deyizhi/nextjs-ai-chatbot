@@ -29,14 +29,33 @@ function PureChatHeader({
   const { open } = useSidebar();
   const { width: windowWidth } = useWindowSize();
   const handleShareClick = async () => {
-    if (chatId) {
+    if (chatId && chatId !== '') {
       // Update visibility to public when sharing
       await updateChatVisibility({
         chatId: chatId,
         visibility: 'public',
       });
       // Copy current link to clipboard
-      navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(window.location.href);
+      
+      // Create a notification element
+      const notification = document.createElement('div');
+      notification.innerText = 'Shared and copied to clipboard';
+      notification.className = 'notification'; // Add a class for styling
+      notification.style.position = 'fixed';
+      notification.style.top = '20px'; // Changed to top for upper right corner
+      notification.style.right = '20px';
+      notification.style.backgroundColor = '#333';
+      notification.style.color = '#fff';
+      notification.style.padding = '10px';
+      notification.style.borderRadius = '5px';
+      notification.style.zIndex = '1000';
+      document.body.appendChild(notification);
+      
+      // Remove the notification after 3 seconds
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 1000);
     }
   };
 
