@@ -49,24 +49,24 @@ export async function POST(request: Request) {
         system: ('o1-mini' === selectedChatModel) ? undefined : systemPrompt({ selectedChatModel }),
         messages,
         maxSteps: 5,
-        experimental_activeTools:  isReasoningModel(selectedChatModel) ? []
-            : [
-                'getWeather',
-                'createDocument',
-                'updateDocument',
-                'requestSuggestions',
-              ],
+       // experimental_activeTools:  isReasoningModel(selectedChatModel) ? []
+       //     : [
+       //         'getWeather',
+       //         'createDocument',
+       //         'updateDocument',
+       //         'requestSuggestions',
+       //       ],
         experimental_transform: smoothStream({ chunking: 'word' }),
         experimental_generateMessageId: generateUUID,
-        tools: {
-          getWeather,
-          createDocument: createDocument({ session, dataStream }),
-          updateDocument: updateDocument({ session, dataStream }),
-          requestSuggestions: requestSuggestions({
-            session,
-            dataStream,
-          }),
-        },
+       // tools: {
+       //   getWeather,
+       //   createDocument: createDocument({ session, dataStream }),
+       //   updateDocument: updateDocument({ session, dataStream }),
+       //   requestSuggestions: requestSuggestions({
+       //     session,
+        //    dataStream,
+       //   }),
+       // },
         onFinish: async ({ response, reasoning }) => {
           if (session.user?.id) {
             try {
