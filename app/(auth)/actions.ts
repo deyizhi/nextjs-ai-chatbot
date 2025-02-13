@@ -61,9 +61,18 @@ export const register = async (
       password: formData.get('password'),
     });
 
-    const [user] = await getUser(validatedData.email);
+    let user;
+    try {
+      [user] = await getUser(validatedData.email);
+    } catch (error) {
+      console.error('Failed to get user during registration:', error, {
+        email: validatedData.email,
+        timestamp: new Date().toISOString()
+      });
+    }
 
     if (user) {
+      console.log('Registration failed: User already exists');
       return { status: 'user_exists' } as RegisterActionState;
     }
     await createUser(validatedData.email, validatedData.password);
@@ -76,9 +85,11 @@ export const register = async (
     return { status: 'success' };
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Registration failed: Invalid form data', error);
       return { status: 'invalid_data' };
     }
 
+    console.error('Registration failed:', error);
     return { status: 'failed' };
   }
 };
