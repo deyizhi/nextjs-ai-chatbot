@@ -6,7 +6,7 @@ import {
 } from 'ai';
 
 import { auth } from '@/app/(auth)/auth';
-import { myProvider } from '@/lib/ai/models';
+import { myProvider, isReasoningModel } from '@/lib/ai/models';
 import { systemPrompt } from '@/lib/ai/prompts';
 import {
   deleteChatById,
@@ -67,8 +67,7 @@ export async function POST(request: Request) {
         messages,
         maxSteps: 5,
         experimental_activeTools:
-          selectedChatModel === 'chat-model-reasoning'
-            ? []
+        isReasoningModel(selectedChatModel) ? []
             : [
                 'getWeather',
                 'createDocument',
@@ -111,7 +110,7 @@ export async function POST(request: Request) {
           }
         },
         experimental_telemetry: {
-          isEnabled: true,
+          isEnabled: false,
           functionId: 'stream-text',
         },
       });
@@ -120,8 +119,8 @@ export async function POST(request: Request) {
         sendReasoning: true,
       });
     },
-    onError: () => {
-      return 'Oops, an error occured!';
+    onError: (error) => {
+      return 'Oops, an error occured, ${error.message}';
     },
   });
 }
