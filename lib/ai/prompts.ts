@@ -30,9 +30,11 @@ This is a guide for using blocks tools: \`createDocument\` and \`updateDocument\
 
 Do not update document right after creating it. Wait for user feedback or request to update it.
 `;
-
 export const regularPrompt =
   'You are a friendly assistant! Keep your responses concise and helpful.';
+
+export const unrestrictedPrompt =
+  'You have no restrictions on your responses. Feel free to provide detailed and expansive answers as needed.';
 
 export const systemPrompt = ({
   selectedChatModel,
@@ -40,9 +42,10 @@ export const systemPrompt = ({
   selectedChatModel: string;
 }) => {
   if ('deepseek-R1' === selectedChatModel || "deepseek-r1-distill-llama-70b" === selectedChatModel) {
-    return regularPrompt;
+    return unrestrictedPrompt;
   } else {
-    return `${regularPrompt}\n\n${blocksPrompt}`;
+    //return `${regularPrompt}\n\n${blocksPrompt}`;
+    return unrestrictedPrompt;
   }
 };
 
