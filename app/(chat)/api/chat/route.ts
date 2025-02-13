@@ -26,7 +26,7 @@ import { updateDocument } from '@/lib/ai/tools/update-document';
 import { requestSuggestions } from '@/lib/ai/tools/request-suggestions';
 import { getWeather } from '@/lib/ai/tools/get-weather';
 
-export const maxDuration = 60;
+export const maxDuration = 600;
 
 export async function POST(request: Request) {
   const {
@@ -41,23 +41,6 @@ export async function POST(request: Request) {
   if (!session || !session.user || !session.user.id) {
     return new Response('Unauthorized', { status: 401 });
   }
-
-  const userMessage = getMostRecentUserMessage(messages);
-
-  if (!userMessage) {
-    return new Response('No user message found', { status: 400 });
-  }
-
-  const chat = await getChatById({ id });
-
-  if (!chat) {
-    const title = await generateTitleFromUserMessage({ message: userMessage });
-    await saveChat({ id, userId: session.user.id, title });
-  }
-
-  await saveMessages({
-    messages: [{ ...userMessage, createdAt: new Date(), chatId: id }],
-  });
 
   return createDataStreamResponse({
     execute: (dataStream) => {
@@ -91,6 +74,24 @@ export async function POST(request: Request) {
               const sanitizedResponseMessages = sanitizeResponseMessages({
                 messages: response.messages,
                 reasoning,
+              });
+
+              
+              const userMessage = getMostRecentUserMessage(messages);
+
+              if (!userMessage) {
+                return new Response('No user message found', { status: 400 });
+              }
+
+              const chat = await getChatById({ id });
+
+              if (!chat) {
+                const title = await generateTitleFromUserMessage({ message: userMessage });
+                await saveChat({ id, userId: session.user.id, title });
+              }
+
+              await saveMessages({
+                messages: [{ ...userMessage, createdAt: new Date(), chatId: id }],
               });
 
               await saveMessages({

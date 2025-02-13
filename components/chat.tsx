@@ -49,7 +49,7 @@ export function Chat({
     sendExtraMessageFields: true,
     generateId: generateUUID,
     onFinish: () => {
-      mutate('/api/history');
+      //mutate('/api/history');
     },
     onError: (error) => {
       toast.error('An error occured, please try again!');
