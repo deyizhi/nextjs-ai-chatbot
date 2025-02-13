@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '@/components/theme-provider';
 
 import './globals.css';
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.queryany.com'), // Replace with your actual domain
@@ -47,11 +49,11 @@ export const metadata: Metadata = {
   //  apple: '/apple-touch-icon.png', // Replace with your Apple Touch Icon path
   //},
   // Other Metadata options, such as viewport, theme-color, etc.
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  //viewport: {
+   // width: 'device-width',
+   // initialScale: 1,
+   // maximumScale: 1,
+ // },
   //themeColor: '#ffffff', // Replace with your website theme color
 };
 
