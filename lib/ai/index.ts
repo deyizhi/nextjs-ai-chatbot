@@ -54,7 +54,26 @@ const anthropic_official = createAnthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-export const customModel = (modelId: string, providerMark: string = '') => {
+export const customModel = (modelId: string) => {
+
+  let providerMark = '';
+  if ('deepseek-R1' === modelId) {
+    const randomValue = Math.random();
+    if (randomValue < 0.05) {
+      providerMark = 'nvidia';
+    } else if (randomValue < 0.25) {
+      providerMark = 'deepseek';
+    } else if (randomValue < 0.30) { // together probability changed to 5%
+      providerMark = 'together';
+    } else if (randomValue < 0.85) {
+      providerMark = 'openrouter_standard';
+    } else {
+      providerMark = 'openrouter_nitro';
+    }
+  } else if ('deepseek-r1-distill-llama-70b' === modelId) {
+    providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
+  }
+
   let model;
   switch (modelId) {
     case 'grok-beta':
