@@ -62,6 +62,8 @@ export function Chat({
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
       revalidateIfStale: false,
+      focusThrottleInterval: 300000,
+      errorRetryInterval:300000,
     }
   );
 

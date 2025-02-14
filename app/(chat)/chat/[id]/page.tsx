@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import { auth } from '@/app/(auth)/auth';
 import { Chat } from '@/components/chat';
@@ -11,23 +11,25 @@ import { DEFAULT_CHAT_MODEL } from '@/lib/ai/models';
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const { id } = params;
-  const chat = await getChatById({ id });
-
-  if (!chat) {
-    notFound();
-  }
 
   const session = await auth();
 
+  const chat = await getChatById({ id });
+  if (!chat) {
+     return redirect('/login');
+  }
+
   if (chat.visibility === 'private') {
+
     if (!session || !session.user) {
-      return notFound();
+      return redirect('/login'); // Redirect to login page if user is not authenticated
     }
 
     if (session.user.id !== chat.userId) {
-      return notFound();
+      return redirect('/login'); // Redirect to login page if user is not the owner of the chat
     }
   }
+
 
   const messagesFromDb = await getMessagesByChatId({
     id,
