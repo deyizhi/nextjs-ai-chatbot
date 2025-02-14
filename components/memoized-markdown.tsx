@@ -4,11 +4,16 @@ import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CodeBlock } from './code-block';
 import { marked } from 'marked';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeReact from 'rehype-react';
+import rehypeSanitize from 'rehype-sanitize';
+import { Fragment } from 'react';
 
-const components: Partial<Components> = {
+const components: Components = {
     // @ts-expect-error
     code: CodeBlock,
-    pre: ({ children }) => <>{children}</>,
+    div: ({ children }) => <>{children}</>,
     ol: ({ node, children, ...props }) => {
       return (
         <ol className="list-decimal list-outside ml-4" {...props}>
@@ -94,10 +99,7 @@ const components: Partial<Components> = {
     },
   };
 
-function parseMarkdownIntoBlocks(markdown: string): string[] {
-  const tokens = marked.lexer(markdown);
-  return tokens.map(token => token.raw);
-}
+
 
 //////////////
 const remarkPlugins = [remarkGfm];
@@ -116,11 +118,9 @@ MemoizedMarkdownBlock.displayName = 'MemoizedMarkdownBlock';
 
 export const MemMarkdown = memo(
   ({ children }: { children: string }) => {
-    const blocks = useMemo(() => parseMarkdownIntoBlocks(children), [children]);
-
-    return blocks.map((block, index) => (
-      <MemoizedMarkdownBlock content={block} key={`markdown-block_${index}`} />
-    ));
+    return (
+      <MemoizedMarkdownBlock content={children} />
+    );
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children
 );
