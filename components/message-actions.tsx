@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import equal from 'fast-deep-equal';
 
 export function PureMessageActions({
@@ -34,44 +34,6 @@ export function PureMessageActions({
   if (message.role === 'user') return null;
   if (message.toolInvocations && message.toolInvocations.length > 0)
     return null;
-
-  const handleVote = useCallback(async (type: 'up' | 'down') => {
-    const response = await fetch('/api/vote', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        chatId,
-        messageId: message.id,
-        type,
-      }),
-    });
-
-    if (response.ok) {
-      mutate<Array<Vote>>(
-        `/api/vote?chatId=${chatId}`,
-        (currentVotes) => {
-          if (!currentVotes) return [];
-
-          const votesWithoutCurrent = currentVotes.filter(
-            (vote) => vote.messageId !== message.id,
-          );
-
-          return [
-            ...votesWithoutCurrent,
-            {
-              chatId,
-              messageId: message.id,
-              isUpvoted: type === 'up',
-            },
-          ];
-        },
-        { revalidate: false },
-      );
-
-      toast.success(`${type === 'up' ? 'Upvoted' : 'Downvoted'} Response!`);
-    } else {
-      toast.error(`Failed to ${type === 'up' ? 'upvote' : 'downvote'} response.`);
-    }
-  }, [chatId, message.id, mutate]);
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -98,7 +60,45 @@ export function PureMessageActions({
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
               disabled={vote?.isUpvoted}
               variant="outline"
-              onClick={() => handleVote('up')}
+              onClick={async () => {
+                const upvote = fetch('/api/vote', {
+                  method: 'PATCH',
+                  body: JSON.stringify({
+                    chatId,
+                    messageId: message.id,
+                    type: 'up',
+                  }),
+                });
+
+                toast.promise(upvote, {
+                  loading: 'Upvoting Response...',
+                  success: () => {
+                    mutate<Array<Vote>>(
+                      `/api/vote?chatId=${chatId}`,
+                      (currentVotes) => {
+                        if (!currentVotes) return [];
+
+                        const votesWithoutCurrent = currentVotes.filter(
+                          (vote) => vote.messageId !== message.id,
+                        );
+
+                        return [
+                          ...votesWithoutCurrent,
+                          {
+                            chatId,
+                            messageId: message.id,
+                            isUpvoted: true,
+                          },
+                        ];
+                      },
+                      { revalidate: false },
+                    );
+
+                    return 'Upvoted Response!';
+                  },
+                  error: 'Failed to upvote response.',
+                });
+              }}
             >
               <ThumbUpIcon />
             </Button>
@@ -112,7 +112,45 @@ export function PureMessageActions({
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
               variant="outline"
               disabled={vote && !vote.isUpvoted}
-              onClick={() => handleVote('down')}
+              onClick={async () => {
+                const downvote = fetch('/api/vote', {
+                  method: 'PATCH',
+                  body: JSON.stringify({
+                    chatId,
+                    messageId: message.id,
+                    type: 'down',
+                  }),
+                });
+
+                toast.promise(downvote, {
+                  loading: 'Downvoting Response...',
+                  success: () => {
+                    mutate<Array<Vote>>(
+                      `/api/vote?chatId=${chatId}`,
+                      (currentVotes) => {
+                        if (!currentVotes) return [];
+
+                        const votesWithoutCurrent = currentVotes.filter(
+                          (vote) => vote.messageId !== message.id,
+                        );
+
+                        return [
+                          ...votesWithoutCurrent,
+                          {
+                            chatId,
+                            messageId: message.id,
+                            isUpvoted: false,
+                          },
+                        ];
+                      },
+                      { revalidate: false },
+                    );
+
+                    return 'Downvoted Response!';
+                  },
+                  error: 'Failed to downvote response.',
+                });
+              }}
             >
               <ThumbDownIcon />
             </Button>
