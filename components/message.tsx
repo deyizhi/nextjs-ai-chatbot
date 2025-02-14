@@ -167,7 +167,7 @@ const PurePreviewMessage = ({
                             isReadonly={isReadonly}
                           />
                         ) : (
-                          <pre>{JSON.stringify(result, null, 2)}</pre>
+                          <div>{JSON.stringify(result, null, 2)}</div>
                         )}
                       </div>
                     );

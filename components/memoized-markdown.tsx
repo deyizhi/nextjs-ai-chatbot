@@ -3,12 +3,22 @@ import React, { memo, useMemo } from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { CodeBlock } from './code-block';
-import { marked } from 'marked';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import rehypeReact from 'rehype-react';
+import rehypeHighlight from 'rehype-highlight'
 import rehypeSanitize from 'rehype-sanitize';
-import { Fragment } from 'react';
+import rehypeRaw from 'rehype-raw'
+
+const sanitizeOptions = {
+  tagNames: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'ul', 'ol', 'li', 'strong', 'em', 'code', 'pre', 'blockquote', 'img', 'div', 'span'],
+  attributes: {
+    '*': ['className', 'style'], // Allow `className` and `style` on all elements
+    a: ['href', 'target', 'rel', 'title'], // Allow additional attributes on `<a>` tags
+    img: ['src', 'alt', 'width', 'height'], // Allow additional attributes on `<img>` tags
+  },
+  protocols: {
+    href: ['http', 'https', 'mailto', 'tel'],
+    src: ['http', 'https', 'data'], // Allow `data:` URIs for inline images
+  },
+};
 
 const components: Components = {
     // @ts-expect-error
@@ -106,7 +116,7 @@ const remarkPlugins = [remarkGfm];
 
 const MemoizedMarkdownBlock = memo(
     ({ content }: { content: string }) => {
-      return <ReactMarkdown remarkPlugins={remarkPlugins} components={components}>{content}</ReactMarkdown>;
+      return <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={[rehypeHighlight,rehypeRaw]} components={components}>{content}</ReactMarkdown>;
     },
     (prevProps, nextProps) => {
       if (prevProps.content !== nextProps.content) return false;
