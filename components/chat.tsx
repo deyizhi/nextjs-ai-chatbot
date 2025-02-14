@@ -15,7 +15,6 @@ import { Messages } from './messages';
 import { VisibilityType } from './visibility-selector';
 import { useBlockSelector } from '@/hooks/use-block';
 import { toast } from 'sonner';
-
 export function Chat({
   id,
   initialMessages,
@@ -59,6 +58,11 @@ export function Chat({
   const { data: votes } = useSWR<Array<Vote>>(
     `/api/vote?chatId=${id}`,
     fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    }
   );
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
