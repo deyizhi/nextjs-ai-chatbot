@@ -14,14 +14,14 @@ export const Overview = () => {
       transition={{ delay: 0.5 }}
     >
       <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
-        <p className="flex flex-row justify-center gap-4 items-center">
+        <div className="flex flex-row justify-center gap-4 items-center">
           <VercelIcon size={32} />
           <span>+</span>
           <MessageIcon size={32} />
-        </p>
-        <p className="font-regular font-display text-3xl md:text-4xl">
+        </div>
+        <div className="font-regular font-display text-3xl md:text-4xl">
           Ask anything
-        </p>
+        </div>
       </div>
     </motion.div>
   );
