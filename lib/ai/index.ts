@@ -65,20 +65,19 @@ export const customModel = (modelId: string) => {
     const randomValue = Math.random();
     if (randomValue < 0.05) {
       providerMark = 'nvidia';
-    } else if (randomValue < 0.25) {
+    } else if (randomValue < 0.45) {
       providerMark = 'deepseek';
-    } else if (randomValue < 0.30) { // together probability changed to 5%
+    } else if (randomValue < 0.50) { // together probability changed to 5%
       providerMark = 'together';
-    } else if (randomValue < 0.85) {
+    } else if (randomValue < 0.95) {
       providerMark = 'openrouter_standard';
     } else {
-      providerMark = 'openrouter_nitro';
+      providerMark = 'openrouter_free';
     }
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
   }
-  providerMark = 'openrouter_standard';
 
   let model;
   switch (modelId) {
