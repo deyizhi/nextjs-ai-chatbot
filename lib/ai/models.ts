@@ -13,6 +13,9 @@ const openai_custom = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY_CUSTOM, 
 });
 
+const title_model_id = process.env.TITLE_MODEL || "";
+const block_model_id = process.env.BLOCK_MODEL || "";
+
 export const DEFAULT_CHAT_MODEL: string = 'gemini-2.0-flash-exp';
 
 export const isReasoningModel = (selectedChatModel: string): boolean => {
@@ -31,8 +34,8 @@ export const myProvider = customProvider({
     'deepseek-r1-distill-llama-70b': customModel('deepseek-r1-distill-llama-70b'),
     'claude-3.5-haiku': customModel('claude-3.5-haiku'),
     'claude-3.5-sonnet0620': customModel('claude-3.5-sonnet0620'),
-    'title-model': openai_custom('gpt-4o-mini'),
-    'block-model': openai_custom('gpt-4o-mini'),
+    'title-model': customModel(title_model_id),
+    'block-model': customModel(block_model_id),
   },
   imageModels: {
     'small-model': openai_custom.image('dall-e-2'),
