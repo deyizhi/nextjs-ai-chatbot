@@ -28,14 +28,6 @@ import { getWeather } from '@/lib/ai/tools/get-weather';
 
 export const maxDuration = 60;
 
-function calculateMessagesLength(messages: Array<ResponseMessage>) {
-  return messages.reduce((total, message) => {
-    const textContent = Array.isArray(message.content) 
-      ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
-      : message.content;
-    return total + textContent.length;
-  }, 0);
-}
 
 export async function POST(request: Request) {
   const {
@@ -79,24 +71,29 @@ export async function POST(request: Request) {
        //   }),
        // },
         onFinish: async ({ response, reasoning }) => {
+
           if (session.user?.id) {
+            
             const finishStartTime = new Date();
             const streamStartToFinishDelay = Date.now() - streamStartTimeMs;
+            const userMessage = getMostRecentUserMessage(messages);
+            if (!userMessage) {
+              console.error('No user message found,', {timestamp: new Date().toISOString(), user: session.user?.id});
+              return;
+            }
+            const userMessageLength = userMessage?.content?.length || 0;
+            const responseMessagesLength = messages.reduce((total, message) => {
+              const textContent = Array.isArray(message.content) 
+                ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
+                : message.content;
+              return total + textContent.length;
+            }, 0);
+
             try {
               const sanitizedResponseMessages = sanitizeResponseMessages({
                 messages: response.messages,
                 reasoning,
               });
-
-              const userMessage = getMostRecentUserMessage(messages);
-
-              if (!userMessage) {
-                console.error('No user message found');
-                return;
-              }
-
-              const userMessageLength = userMessage?.content?.length || 0;
-              const responseMessagesLength = calculateMessagesLength(response.messages);
 
               const operationsLog = [];
               
@@ -177,7 +174,6 @@ export async function POST(request: Request) {
             } catch (error) {
               const userMessage = getMostRecentUserMessage(messages);
               const userMessageLength = userMessage?.content?.length || 0;
-              const responseMessagesLength = calculateMessagesLength(response.messages);
               console.error('Failed to save chat', error, {
                 user: session?.user?.id,
                 timestamp: new Date().toISOString(),
