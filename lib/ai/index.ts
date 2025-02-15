@@ -78,7 +78,8 @@ export const customModel = (modelId: string) => {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
   }
-
+  providerMark = 'together';
+  
   let model;
   switch (modelId) {
     case 'grok-beta':
