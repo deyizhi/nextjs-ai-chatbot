@@ -89,7 +89,7 @@ export const chatModels: Array<ChatModel> = [
   },
   {
     id: 'claude-3.5-sonnet0620',
-    name: 'Claude 3.5 sonnet 0620',
+    name: 'Claude 3.5 sonnet V1',
     description: 'A efficiency model from Anthropic',
   },
   {
