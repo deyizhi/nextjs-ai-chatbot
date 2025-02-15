@@ -82,7 +82,8 @@ export async function POST(request: Request) {
               return;
             }
             const userMessageLength = userMessage?.content?.length || 0;
-            const responseMessagesLength = messages.reduce((total, message) => {
+            
+            const responseMessagesLength = response.messages.reduce((total, message) => {
               const textContent = Array.isArray(message.content) 
                 ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
                 : message.content;
