@@ -148,7 +148,6 @@ export const ChatItem = memo(PureChatItem, (prevProps, nextProps) => {
   if (prevProps.isActive !== nextProps.isActive) return false;
   return true;
 });
-
 export function SidebarHistory({ user }: { user: User | undefined }) {
   const { setOpenMobile } = useSidebar();
   const { id } = useParams();
@@ -159,6 +158,11 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     mutate,
   } = useSWR<Array<Chat>>(user ? '/api/history' : null, fetcher, {
     fallbackData: [],
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+    focusThrottleInterval: 900000,
+    errorRetryInterval:900000,
   });
 
   useEffect(() => {
