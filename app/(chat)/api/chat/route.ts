@@ -170,12 +170,12 @@ export async function POST(request: Request) {
                 responseMessagesLength,
                 operations: operationsLog
               };
-              console.log('operations log:', JSON.stringify(logData));
+              console.log('[INFO] operations log:', JSON.stringify(logData));
 
             } catch (error) {
               const userMessage = getMostRecentUserMessage(messages);
               const userMessageLength = userMessage?.content?.length || 0;
-              console.error('Failed to save chat', error, {
+              console.error('[ERROR] Failed to save chat, error:"', error, '",',{
                 user: session?.user?.id,
                 timestamp: new Date().toISOString(),
                 streamStartTime: streamStartTimeShow.toISOString(),
@@ -184,7 +184,6 @@ export async function POST(request: Request) {
                 selectedChatModel,
                 userMessageLength,
                 responseMessagesLength,
-                error: error instanceof Error ? error.message : String(error)
               });
             }
           }
@@ -203,7 +202,7 @@ export async function POST(request: Request) {
       const userMessage = getMostRecentUserMessage(messages);
       const userMessageLength = userMessage?.content?.length || 0;
       
-      console.error('Chat processing failed, ', {
+      console.error('[ERROR] Chat processing failed, ', {
         user: session?.user?.id,
         timestamp: new Date().toISOString(),
         streamStartTime: streamStartTimeShow.toISOString(),
