@@ -121,7 +121,7 @@ export const customModel = (modelId: string) => {
           break;
         default:
           model =  wrapLanguageModel({
-            model: google('deepseek-r1-distill-llama-70b'),
+            model: groq('deepseek-r1-distill-llama-70b'),
             middleware: extractReasoningMiddleware({ tagName: 'think' }),
           });
           break;
