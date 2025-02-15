@@ -1,4 +1,4 @@
-import { groq } from '@ai-sdk/groq';
+import { groq, createGroq } from '@ai-sdk/groq';
 import { xai } from '@ai-sdk/xai';
 import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the correct import for the OpenAI object
 import { google } from '@ai-sdk/google';
@@ -78,7 +78,7 @@ export const customModel = (modelId: string) => {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
   }
-  providerMark = 'sambanova';
+
 
   let model;
   switch (modelId) {
@@ -120,7 +120,11 @@ export const customModel = (modelId: string) => {
           model = openai_sambanova("DeepSeek-R1-Distill-Llama-70B");
           break;
         default:
-          model = groq("deepseek-r1-distill-llama-70b");
+          model =  wrapLanguageModel({
+            model: google('deepseek-r1-distill-llama-70b'),
+            middleware: extractReasoningMiddleware({ tagName: 'think' }),
+          });
+          break;
           break;  
       }
       break;
