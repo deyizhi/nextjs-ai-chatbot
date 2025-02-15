@@ -26,7 +26,7 @@ import { updateDocument } from '@/lib/ai/tools/update-document';
 import { requestSuggestions } from '@/lib/ai/tools/request-suggestions';
 import { getWeather } from '@/lib/ai/tools/get-weather';
 
-export const maxDuration = 600;
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const {
@@ -42,6 +42,7 @@ export async function POST(request: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
+  const streamStartTime = Date.now();
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
@@ -69,6 +70,7 @@ export async function POST(request: Request) {
        // },
         onFinish: async ({ response, reasoning }) => {
           if (session.user?.id) {
+            const startTime = new Date();
             try {
               const sanitizedResponseMessages = sanitizeResponseMessages({
                 messages: response.messages,
@@ -82,30 +84,99 @@ export async function POST(request: Request) {
                 return;
               }
 
+              const userMessageLength = userMessage?.content?.length || 0;
+              const responseMessagesLength = response.messages.reduce((total, message) => {
+                const textContent = Array.isArray(message.content) 
+                  ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
+                  : message.content;
+                return total + textContent.length;
+              }, 0);
+
+              const operationsLog = [];
+              
+              operationsLog.push({
+                operation: 'stream_start_to_finish',
+                start: new Date(streamStartTime).toISOString(),
+                delayMs: Date.now() - streamStartTime,
+                status: 'success'
+              });
+
+              // Save chat operation
+              const getChatStart = Date.now();
               const chat = await getChatById({ id });
+              operationsLog.push({
+                operation: 'getChatById',
+                start: new Date(getChatStart).toISOString(),
+                delayMs: Date.now() - getChatStart,
+                status: 'success'
+              });
 
               if (!chat) {
+                const generateTitleStart = Date.now();
                 const title = await generateTitleFromUserMessage({ message: userMessage });
+                operationsLog.push({
+                  operation: 'generateTitle',
+                  start: new Date(generateTitleStart).toISOString(),
+                  delayMs: Date.now() - generateTitleStart,
+                  status: 'success'
+                });
+
+                const saveChatStart = Date.now();
                 await saveChat({ id, userId: session.user.id, title });
+                operationsLog.push({
+                  operation: 'saveChat',
+                  start: new Date(saveChatStart).toISOString(),
+                  delayMs: Date.now() - saveChatStart,
+                  status: 'success'
+                });
               }
 
+              // Save user message
+              const saveUserMsgStart = Date.now();
               await saveMessages({
                 messages: [{ ...userMessage, createdAt: new Date(), chatId: id }],
               });
-
-              await saveMessages({
-                messages: sanitizedResponseMessages.map((message) => {
-                  return {
-                    id: message.id,
-                    chatId: id,
-                    role: message.role,
-                    content: message.content,
-                    createdAt: new Date(),
-                  };
-                }),
+              operationsLog.push({
+                operation: 'saveUserMessage',
+                start: new Date(saveUserMsgStart).toISOString(),
+                delayMs: Date.now() - saveUserMsgStart,
+                status: 'success'
               });
+
+              // Save response messages
+              const saveRespMsgStart = Date.now();
+              await saveMessages({
+                messages: sanitizedResponseMessages.map((message) => ({
+                  id: message.id,
+                  chatId: id,
+                  role: message.role,
+                  content: message.content,
+                  createdAt: new Date(),
+                })),
+              });
+              operationsLog.push({
+                operation: 'saveResponseMessages',
+                start: new Date(saveRespMsgStart).toISOString(),
+                delayMs: Date.now() - saveRespMsgStart,
+                status: 'success'
+              });
+
+              // Log all database operations
+              const logData = {
+                timestamp: startTime.toISOString(),
+                selectedChatModel,
+                userMessageLength,
+                responseMessagesLength,
+                operations: operationsLog
+              };
+              console.log('operations log:', JSON.stringify(logData));
+
             } catch (error) {
-              console.error('Failed to save chat', error);
+              console.error('Failed to save chat', error, {
+                timestamp: new Date().toISOString(),
+                selectedChatModel,
+                error: error instanceof Error ? error.message : String(error)
+              });
             }
           }
         },
