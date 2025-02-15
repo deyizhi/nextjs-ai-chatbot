@@ -4,6 +4,10 @@ import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the co
 import { google } from '@ai-sdk/google';
 import { deepseek } from '@ai-sdk/deepseek';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import {
+  extractReasoningMiddleware,
+  wrapLanguageModel,
+} from 'ai';
 //import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 //import { openrouter } from "@openrouter/ai-sdk-provider";
 
@@ -73,7 +77,7 @@ export const customModel = (modelId: string) => {
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
   }
-
+  
   let model;
   switch (modelId) {
     case 'grok-beta':
@@ -97,8 +101,13 @@ export const customModel = (modelId: string) => {
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
-    case 'gemini-2.0-flash-thinking-exp-01-21':
       model = google(modelId); // Using Google SDK for Gemini models
+      break;
+    case 'gemini-2.0-flash-thinking-exp-01-21':  
+      model =  wrapLanguageModel({
+        model: google(modelId),
+        middleware: extractReasoningMiddleware({ tagName: 'think' }),
+      });
       break;
     case 'deepseek-chat':
       model = deepseek(modelId);
@@ -119,19 +128,31 @@ export const customModel = (modelId: string) => {
             model = nvidia_custom("deepseek-ai/deepseek-r1");
             break;
           case 'openrouter_free':
-            model = openrouter_custom("deepseek/deepseek-r1:free");
+            model =  wrapLanguageModel({
+              model: openrouter_custom("deepseek/deepseek-r1:free"),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+              });
             break;
           case 'deepseek':
             model = deepseek("deepseek-reasoner");
             break;
           case 'openrouter_standard':
-            model = openrouter_custom("deepseek/deepseek-r1");
+            model =  wrapLanguageModel({
+                model: openrouter_custom("deepseek/deepseek-r1"),
+                middleware: extractReasoningMiddleware({ tagName: 'think' }),
+                });
             break;
           case 'openrouter_nitro':
-            model = openrouter_custom("deepseek/deepseek-r1:nitro");
+            model =  wrapLanguageModel({
+              model: openrouter_custom("deepseek/deepseek-r1:nitro"),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+              });
             break;
           case 'together':
-            model = openai_together('deepseek-ai/DeepSeek-R1');
+            model =  wrapLanguageModel({
+              model: openai_together('deepseek-ai/DeepSeek-R1'),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+              });
             break;
           default:
             model = deepseek("deepseek-reasoner");
