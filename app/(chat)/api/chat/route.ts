@@ -202,14 +202,14 @@ export async function POST(request: Request) {
       const userMessage = getMostRecentUserMessage(messages);
       const userMessageLength = userMessage?.content?.length || 0;
       
-      console.error('[ERROR] Chat processing failed, ', {
+      console.error('[ERROR] Chat processing failed, ', error, {
         user: session?.user?.id,
         timestamp: new Date().toISOString(),
         streamStartTime: streamStartTimeShow.toISOString(),
         delay: Date.now() - streamStartTimeMs,
         selectedChatModel,
         userMessageLength,
-        error: error instanceof Error ? error.message : String(error)
+        error: error instanceof Error ? error.message : error
       });
       return `Chat processing failed, an error occurred: ${error instanceof Error ? error.message : String(error)}`;
     },
