@@ -79,7 +79,6 @@ export const customModel = (modelId: string) => {
     providerMark = 'groq';
   }
 
-
   let model;
   switch (modelId) {
     case 'grok-beta':
@@ -131,7 +130,10 @@ export const customModel = (modelId: string) => {
     case 'deepseek-R1':
         switch (providerMark) {
           case 'nvidia':
-            model = nvidia_custom("deepseek-ai/deepseek-r1");
+            model =  wrapLanguageModel({
+              model: nvidia_custom("deepseek-ai/deepseek-r1"),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+              });
             break;
           case 'openrouter_free':
             model =  wrapLanguageModel({
