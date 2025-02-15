@@ -28,6 +28,15 @@ import { getWeather } from '@/lib/ai/tools/get-weather';
 
 export const maxDuration = 60;
 
+function calculateMessagesLength(messages: Array<ResponseMessage>) {
+  return messages.reduce((total, message) => {
+    const textContent = Array.isArray(message.content) 
+      ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
+      : message.content;
+    return total + textContent.length;
+  }, 0);
+}
+
 export async function POST(request: Request) {
   const {
     id,
@@ -42,7 +51,8 @@ export async function POST(request: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const streamStartTime = Date.now();
+  const streamStartTimeMs = Date.now();
+  const streamStartTimeShow = new Date();
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
@@ -70,7 +80,8 @@ export async function POST(request: Request) {
        // },
         onFinish: async ({ response, reasoning }) => {
           if (session.user?.id) {
-            const startTime = new Date();
+            const finishStartTime = new Date();
+            const streamStartToFinishDelay = Date.now() - streamStartTimeMs;
             try {
               const sanitizedResponseMessages = sanitizeResponseMessages({
                 messages: response.messages,
@@ -85,22 +96,10 @@ export async function POST(request: Request) {
               }
 
               const userMessageLength = userMessage?.content?.length || 0;
-              const responseMessagesLength = response.messages.reduce((total, message) => {
-                const textContent = Array.isArray(message.content) 
-                  ? message.content.map(part => part.type === 'text' ? part.text : '').join('') 
-                  : message.content;
-                return total + textContent.length;
-              }, 0);
+              const responseMessagesLength = calculateMessagesLength(response.messages);
 
               const operationsLog = [];
               
-              operationsLog.push({
-                operation: 'stream_start_to_finish',
-                start: new Date(streamStartTime).toISOString(),
-                delayMs: Date.now() - streamStartTime,
-                status: 'success'
-              });
-
               // Save chat operation
               const getChatStart = Date.now();
               const chat = await getChatById({ id });
@@ -163,7 +162,11 @@ export async function POST(request: Request) {
 
               // Log all database operations
               const logData = {
-                timestamp: startTime.toISOString(),
+                user: session?.user?.id,
+                timestamp: new Date().toISOString(),
+                streamStartTime: streamStartTimeShow.toISOString(),
+                finishStartTime: finishStartTime.toISOString(),
+                stream_delay: streamStartToFinishDelay,
                 selectedChatModel,
                 userMessageLength,
                 responseMessagesLength,
@@ -172,9 +175,18 @@ export async function POST(request: Request) {
               console.log('operations log:', JSON.stringify(logData));
 
             } catch (error) {
+              const userMessage = getMostRecentUserMessage(messages);
+              const userMessageLength = userMessage?.content?.length || 0;
+              const responseMessagesLength = calculateMessagesLength(response.messages);
               console.error('Failed to save chat', error, {
+                user: session?.user?.id,
                 timestamp: new Date().toISOString(),
+                streamStartTime: streamStartTimeShow.toISOString(),
+                finishStartTime: finishStartTime.toISOString(),
+                stream_delay: streamStartToFinishDelay,
                 selectedChatModel,
+                userMessageLength,
+                responseMessagesLength,
                 error: error instanceof Error ? error.message : String(error)
               });
             }
@@ -191,7 +203,19 @@ export async function POST(request: Request) {
       });
     },
     onError: (error) => {
-      return 'Oops, an error occured, ${error.message}';
+      const userMessage = getMostRecentUserMessage(messages);
+      const userMessageLength = userMessage?.content?.length || 0;
+      
+      console.error('Chat processing failed', {
+        user: session?.user?.id,
+        timestamp: new Date().toISOString(),
+        streamStartTime: streamStartTimeShow.toISOString(),
+        delay: Date.now() - streamStartTimeMs,
+        selectedChatModel,
+        userMessageLength,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      return `Chat processing failed, an error occurred: ${error instanceof Error ? error.message : String(error)}`;
     },
   });
 }
