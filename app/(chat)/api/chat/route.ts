@@ -206,7 +206,7 @@ export async function POST(request: Request) {
       const userMessage = getMostRecentUserMessage(messages);
       const userMessageLength = userMessage?.content?.length || 0;
       
-      console.error('Chat processing failed', {
+      console.error('Chat processing failed, ', {
         user: session?.user?.id,
         timestamp: new Date().toISOString(),
         streamStartTime: streamStartTimeShow.toISOString(),
