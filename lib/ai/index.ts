@@ -75,9 +75,10 @@ export const customModel = (modelId: string) => {
       providerMark = 'openrouter_nitro';
     }
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
-    providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
+    //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
+    providerMark = 'groq';
   }
-  
+
   let model;
   switch (modelId) {
     case 'grok-beta':
@@ -154,6 +155,12 @@ export const customModel = (modelId: string) => {
               middleware: extractReasoningMiddleware({ tagName: 'think' }),
               });
             break;
+          case 'sambanova':
+            model =  wrapLanguageModel({
+              model: openai_sambanova('DeepSeek-R1'),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+              });
+            break;  
           default:
             model = deepseek("deepseek-reasoner");
             break;  
