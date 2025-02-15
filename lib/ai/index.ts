@@ -104,11 +104,8 @@ export const customModel = (modelId: string) => {
     case 'gemini-2.0-flash-exp':
       model = google(modelId); // Using Google SDK for Gemini models
       break;
-    case 'gemini-2.0-flash-thinking-exp-01-21':  
-      model =  wrapLanguageModel({
-        model: google(modelId),
-        middleware: extractReasoningMiddleware({ tagName: 'think' }),
-      });
+    case 'gemini-2.0-flash-thinking-exp-01-21': 
+      model = google(modelId);
       break;
     case 'deepseek-chat':
       model = deepseek(modelId);
