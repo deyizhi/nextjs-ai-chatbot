@@ -1,15 +1,11 @@
 import type { Metadata } from 'next';
 
 import { Toaster } from 'sonner';
-import { Inter } from "next/font/google"
+
 import { ThemeProvider } from '@/components/theme-provider';
 
 import './globals.css';
-//import SessionProvider from "@/components/session-provider"
-import { SessionProvider } from "next-auth/react"
-import { auth } from './(auth)/auth';
 
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.queryany.com'), // Replace with your actual domain
@@ -117,8 +113,8 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-        <Toaster position="top-center" />
-        <SessionProvider>{children}</SessionProvider>
+          <Toaster position="top-center" />
+          {children}
         </ThemeProvider>
       </body>
     </html>
