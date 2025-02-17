@@ -31,11 +31,9 @@ export async function generateTitleFromUserMessage({
   const { text: title } = await generateText({
     model: myProvider.languageModel('title-model'),
     system: `\n
-    - you will generate a short title based on the first message a user begins a conversation with
-    - ensure it is not more than 30 characters long
-    - the title should be a summary of the user's message
-    - do not use quotes or colons
-    - the output's language should match the input user prompt's language`,
+    - generate a short title summary of the first message
+    - not more than 30 characters
+    - not quotes or colons`,
     prompt: JSON.stringify(truncatedMessage),
   });
 
