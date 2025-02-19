@@ -98,7 +98,7 @@ export const customModel = (modelId: string) => {
       model = openai_official('o1-mini-2024-09-12'); 
       break;
     case 'o3-mini':
-      model = openai_official('openai/o3-mini'); 
+      model = openrouter_custom('openai/o3-mini'); 
       break;
     case 'gemini-1.5-flash':
     case 'gemini-2.0-flash-exp':
