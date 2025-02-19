@@ -29,6 +29,7 @@ export const myProvider = customProvider({
     'gpt-4o-mini': customModel('gpt-4o-mini'),
     'gpt-4o': customModel('gpt-4o'),
     'o1-mini': customModel('o1-mini'),
+    'o3-mini': customModel('o3-mini'),
     'deepseek-chat': customModel('deepseek-chat'),
     'deepseek-R1':  customModel('deepseek-R1'),
     'deepseek-r1-distill-llama-70b': customModel('deepseek-r1-distill-llama-70b'),
@@ -69,6 +70,11 @@ export const chatModels: Array<ChatModel> = [
     id: 'o1-mini',
     name: 'OpenAI o1-mini',
     description: 'optimized for math, science, programming, and other STEM-related tasks.',
+  },
+  {
+    id: 'o3-mini',
+    name: 'OpenAI o3-mini',
+    description: 'cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding.The default is medium.',
   },
   {
     id: 'deepseek-chat',
