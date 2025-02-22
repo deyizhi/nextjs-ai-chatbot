@@ -64,7 +64,6 @@ export const customModel = (modelId: string) => {
   if ('deepseek-R1' === modelId) {
 
       providerMark = 'together';
-    }
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
