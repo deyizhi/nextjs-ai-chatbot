@@ -4,6 +4,7 @@ import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the co
 import { google } from '@ai-sdk/google';
 import { deepseek } from '@ai-sdk/deepseek';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { fireworks } from '@ai-sdk/fireworks';
 import {
   extractReasoningMiddleware,
   wrapLanguageModel,
@@ -62,18 +63,7 @@ export const customModel = (modelId: string) => {
 
   let providerMark = '';
   if ('deepseek-R1' === modelId) {
-    const randomValue = Math.random();
-    if (randomValue < 0.05) {
-      providerMark = 'nvidia';
-    } else if (randomValue < 0.45) {
-      providerMark = 'deepseek';
-    } else if (randomValue < 0.50) { // together probability changed to 5%
-      providerMark = 'together';
-    } else if (randomValue < 0.95) {
-      providerMark = 'openrouter_standard';
-    } else {
-      providerMark = 'openrouter_free';
-    }
+      providerMark = Math.random() < 0.3 ? 'fireworks' : 'together';
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
@@ -154,10 +144,16 @@ export const customModel = (modelId: string) => {
               });
             break;
           case 'together':
-            model =  wrapLanguageModel({
+            model = wrapLanguageModel({
               model: openai_together('deepseek-ai/DeepSeek-R1'),
               middleware: extractReasoningMiddleware({ tagName: 'think' }),
               });
+            break;
+          case 'fireworks':
+            model = wrapLanguageModel({
+              model: fireworks('accounts/fireworks/models/deepseek-r1'),
+              middleware: extractReasoningMiddleware({ tagName: 'think' }),
+            });
             break;
           case 'sambanova':
             model =  wrapLanguageModel({
