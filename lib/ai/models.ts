@@ -19,7 +19,7 @@ const block_model_id = process.env.BLOCK_MODEL || "";
 export const DEFAULT_CHAT_MODEL: string = 'gemini-2.0-flash-exp';
 
 export const isReasoningModel = (selectedChatModel: string): boolean => {
-  return selectedChatModel === 'deepseek-R1' || selectedChatModel === 'deepseek-r1-distill-llama-70b';
+  return selectedChatModel === 'deepseek-R1' || selectedChatModel === 'R1-1776' || selectedChatModel === 'deepseek-r1-distill-llama-70b';
 };
 
 export const myProvider = customProvider({
@@ -32,6 +32,7 @@ export const myProvider = customProvider({
     'o3-mini': customModel('o3-mini'),
     'deepseek-chat': customModel('deepseek-chat'),
     'deepseek-R1':  customModel('deepseek-R1'),
+    'R1-1776': customModel('R1-1776'),
     'deepseek-r1-distill-llama-70b': customModel('deepseek-r1-distill-llama-70b'),
     'claude-3.5-haiku': customModel('claude-3.5-haiku'),
     'claude-3.5-sonnet0620': customModel('claude-3.5-sonnet0620'),
@@ -74,7 +75,7 @@ export const chatModels: Array<ChatModel> = [
   {
     id: 'o3-mini',
     name: 'OpenAI o3-mini',
-    description: 'cost-efficient language model optimized for STEM reasoning tasks, particularly excelling in science, mathematics, and coding.The default is medium.',
+    description: 'cost-efficient model optimized for STEM reasoning tasks, default medium.',
   },
   {
     id: 'deepseek-chat',
@@ -85,6 +86,11 @@ export const chatModels: Array<ChatModel> = [
     id: 'deepseek-R1',
     name: 'Deepseek R1 Full',
     description: 'An advanced reasoning model for complex tasks',
+  },
+  {
+    id: 'R1-1776',
+    name: 'R1 1776',
+    description: 'DeepSeek-R1 withoutsome topics restricted',
   },
   {
     id: 'deepseek-r1-distill-llama-70b',

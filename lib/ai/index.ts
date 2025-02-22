@@ -4,7 +4,7 @@ import { createOpenAI,openai } from '@ai-sdk/openai'; // Assuming this is the co
 import { google } from '@ai-sdk/google';
 import { deepseek } from '@ai-sdk/deepseek';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { fireworks } from '@ai-sdk/fireworks';
+import { createFireworks } from '@ai-sdk/fireworks';
 import {
   extractReasoningMiddleware,
   wrapLanguageModel,
@@ -20,7 +20,7 @@ const openai_custom = createOpenAI({
 
 const openrouter_custom = createOpenAI({
   // custom settings, e.g.
-  baseURL: 'https://openrouter.ai/api/v1', // Specify the base URL for OpenAI
+  baseURL: process.env.OPENROUTER_URL, // Specify the base URL for OpenAI
   apiKey: process.env.OPENROUTER_API_KEY, 
 });
 
@@ -32,8 +32,8 @@ const nvidia_custom = createOpenAI({
 
 const openai_gpt4free = createOpenAI({
   // custom settings, e.g.
-  baseURL: process.env.OPENAI_URL_FREE, // Specify the base URL for OpenAI
-  apiKey: process.env.OPENAI_API_KEY_FREE, 
+  baseURL: process.env.OPENAI_URL_FREE ?? '', // Specify the base URL for OpenAI
+  apiKey: process.env.OPENAI_API_KEY_FREE ?? '', 
 });
 
 const openai_together = createOpenAI({
@@ -59,11 +59,21 @@ const anthropic_official = createAnthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+const perplexity_official = createOpenAI({
+  baseURL: process.env.PERPLEXITY_URL,
+  apiKey: process.env.PERPLEXITY_API_KEY,
+});
+
+const fireworks_official = createFireworks({
+  baseURL: process.env.FIREWORKS_URL,
+  apiKey: process.env.FIREWORKS_API_KEY,
+});
+
 export const customModel = (modelId: string) => {
 
   let providerMark = '';
   if ('deepseek-R1' === modelId) {
-      providerMark = Math.random() < 0.3 ? 'fireworks' : 'together';
+    providerMark = Math.random() < 0.3 ? 'fireworks' : 'together';
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';
@@ -111,7 +121,6 @@ export const customModel = (modelId: string) => {
             middleware: extractReasoningMiddleware({ tagName: 'think' }),
           });
           break;
-          break;  
       }
       break;
     case 'deepseek-R1':
@@ -151,7 +160,7 @@ export const customModel = (modelId: string) => {
             break;
           case 'fireworks':
             model = wrapLanguageModel({
-              model: fireworks('accounts/fireworks/models/deepseek-r1'),
+              model: fireworks_official('accounts/fireworks/models/deepseek-r1'),
               middleware: extractReasoningMiddleware({ tagName: 'think' }),
             });
             break;
@@ -165,6 +174,11 @@ export const customModel = (modelId: string) => {
             model = deepseek("deepseek-reasoner");
             break;  
         }
+      break;
+    case 'R1-1776':
+      model = Math.random() < 0.5 
+        ? perplexity_official("r1-1776")
+        : openrouter_custom("perplexity/r1-1776");
       break;
     case 'claude-3.5-haiku': 
       //model = openrouter_custom("anthropic/claude-3.5-haiku");
