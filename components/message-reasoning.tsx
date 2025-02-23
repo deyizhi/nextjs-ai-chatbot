@@ -38,20 +38,19 @@ export function MessageReasoning({
           <div className="font-medium">Reasoning</div>
           <div className="animate-spin">
             <LoaderIcon />
-            <ChevronDownIcon />
           </div>
         </div>
       ) : (
         <div className="flex flex-row gap-2 items-center">
           <div className="font-medium">Reasoned for a few seconds</div>
-          <div
+          <motion.div
             className="cursor-pointer"
-            onClick={() => {
-              setIsExpanded(!isExpanded);
-            }}
+            onClick={() => setIsExpanded(!isExpanded)}
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
           >
             <ChevronDownIcon />
-          </div>
+          </motion.div>
         </div>
       )}
 
