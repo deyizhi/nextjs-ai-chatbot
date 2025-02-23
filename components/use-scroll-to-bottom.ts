@@ -13,7 +13,13 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 
     if (container && end) {
       const observer = new MutationObserver(() => {
-        end.scrollIntoView({ behavior: 'instant', block: 'end' });
+        // 检查用户是否在底部附近
+        const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+        
+        // 只有当用户在底部附近时才自动滚动
+        if (isNearBottom) {
+         //end.scrollIntoView({ behavior: 'instant', block: 'end' });
+       }
       });
 
       observer.observe(container, {
