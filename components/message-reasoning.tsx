@@ -38,6 +38,7 @@ export function MessageReasoning({
           <div className="font-medium">Reasoning</div>
           <div className="animate-spin">
             <LoaderIcon />
+            <ChevronDownIcon />
           </div>
         </div>
       ) : (
