@@ -193,7 +193,7 @@ export async function POST(request: Request) {
           functionId: 'stream-text',
         },
       });
-
+      result.consumeStream();
       result.mergeIntoDataStream(dataStream, {
         sendReasoning: true,
       });
