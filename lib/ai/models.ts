@@ -88,14 +88,14 @@ export const chatModels: Array<ChatModel> = [
     description: 'An advanced reasoning model for complex tasks',
   },
   {
-    id: 'R1-1776',
-    name: 'R1 1776',
-    description: 'DeepSeek-R1 withoutsome topics restricted',
-  },
-  {
     id: 'deepseek-r1-distill-llama-70b',
     name: 'Deepseek R1 Distill Llama 70B',
     description: 'A distilled version of the Deepseek R1 model, optimized for efficiency and performance',
+  },
+  {
+    id: 'R1-1776',
+    name: 'R1 1776',
+    description: 'DeepSeek-R1 without some topics restricted',
   },
   {
     id: 'claude-3.5-haiku',
