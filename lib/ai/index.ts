@@ -73,7 +73,8 @@ export const customModel = (modelId: string) => {
 
   let providerMark = '';
   if ('deepseek-R1' === modelId) {
-    providerMark = Math.random() < 0.3 ? 'fireworks' : 'together';
+    const randomValue = Math.random();
+    providerMark = randomValue < 0.1 ? 'nvidia' : randomValue < 0.2 ? 'deepseek' : randomValue < 0.5 ? 'fireworks' : 'together';
   } else if ('deepseek-r1-distill-llama-70b' === modelId) {
     //providerMark = Math.random() < 0.7 ? 'groq' : 'sambanova';
     providerMark = 'groq';

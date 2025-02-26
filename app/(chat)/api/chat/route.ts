@@ -7,6 +7,7 @@ import {
 
 import { auth } from '@/app/(auth)/auth';
 import { myProvider, isReasoningModel } from '@/lib/ai/models';
+import { customModel } from '@/lib/ai/index';
 import { systemPrompt } from '@/lib/ai/prompts';
 import {
   deleteChatById,
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: myProvider.languageModel(selectedChatModel),
+        model: customModel(selectedChatModel),
         system: ('o1-mini' === selectedChatModel) ? undefined : systemPrompt({ selectedChatModel }),
         messages,
         maxSteps: 5,
