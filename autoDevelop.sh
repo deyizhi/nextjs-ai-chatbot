@@ -57,7 +57,7 @@ pnpm build
 echo "build over"
 # 复制并修改PM2配置文件
 echo "Copying and updating PM2 configuration..."
-cp "../pm2/ecosystem.config.js.template" "ecosystem${VERSION}.config.js"
+cp "./ecosystem.config.js.template" "ecosystem${VERSION}.config.js"
 sed -i "s/\${version}/${VERSION}/g" "ecosystem${VERSION}.config.js"
 
 RUNNING_VERSION=$(pm2 list | grep online | grep -v pm2-logrotate | awk '{print $4}')
