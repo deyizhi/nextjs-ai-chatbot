@@ -1,0 +1,16 @@
+
+module.exports = {
+  apps: [
+    {
+      name: 'queryany${version}', // 更改为你的项目名称
+      script: 'pnpm',      // 使用 npm 命令
+      args: 'start',      // 运行 npm start 命令
+      cwd: '/home/ubuntu/queryany/queryany${version}', // 显式指定项目目录
+      env: {
+        NODE_ENV: 'production' // 设置环境变量为 production
+      }
+    }
+  ]
+};
+
+
