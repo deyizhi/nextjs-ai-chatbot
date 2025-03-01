@@ -67,19 +67,10 @@ export default function Page() {
     <div className="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl flex flex-col gap-12">
         <div className="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
-          <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In 登錄</h3>
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
-            Please use the email account and password you signed up.
-          </p>
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
-            如未註冊請先註冊
-          </p>
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
-          We will support Google account authentication sign in
-          </p>
+          <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
-          <SubmitButton isSuccessful={isSuccessful}>Sign in 登錄</SubmitButton>
+          <SubmitButton isSuccessful={isSuccessful}>Sign in</SubmitButton>
 
           <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
             {"Don't have an account? "}
@@ -87,7 +78,7 @@ export default function Page() {
               href="/register"
               className="font-semibold text-gray-800 hover:underline dark:text-zinc-200"
             >
-              Sign up 註冊
+              Sign up
             </Link>
             {' for free.'}
           </p>
@@ -100,7 +91,7 @@ export default function Page() {
           rel="noopener noreferrer"
           className="font-semibold text-gray-800 dark:text-gray-200"
         >
-          Privacy Policy 隱私政策
+          Privacy Policy
         </a>{' '}
         and{' '}
         <a
@@ -109,7 +100,7 @@ export default function Page() {
           rel="noopener noreferrer"
           className="font-semibold text-gray-800 dark:text-gray-200"
         >
-          Terms of Service 服務條款
+          Terms of Service
         </a>.
       </div>
       </div>
