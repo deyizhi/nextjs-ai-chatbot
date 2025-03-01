@@ -11,8 +11,8 @@ const getTranslations = () => {
       passwordLabel: 'Password'
     },
     zh: {
-      emailLabel: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-') ? '电子邮件地址' : '電子郵件地址',
-      passwordLabel: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-') ? '密码' : '密碼'
+      emailLabel: navigator.language.startsWith('zh-CN') ? '电子邮件地址' : '電子郵件地址',
+      passwordLabel: navigator.language.startsWith('zh-CN') ? '密码' : '密碼'
     },
     fr: {
       emailLabel: 'Adresse e-mail',

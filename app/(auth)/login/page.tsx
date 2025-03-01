@@ -30,19 +30,19 @@ const getTranslations = () => {
       }
     },
     zh: {
-      signIn: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-Hans') ? '登录' : '登錄',
-      signInButton: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-Hans') ? '登录' : '登錄',
-      noAccount: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-Hans') ? '没有账户？' : '沒有帳戶？',
-      signUp: navigator.language.startsWith('zh-CN') || navigator.language.startsWith('zh-Hans') ? '注册' : '註冊',
-      forFree: ' 免费使用。',
-      privacyPolicy: '隐私政策',
-      termsOfService: '服务条款',
-      agreeText: '登录即表示您同意我们的',
+      signIn: navigator.language.startsWith('zh-CN') ? '登录' : '登錄',
+      signInButton: navigator.language.startsWith('zh-CN') ? '登录' : '登錄',
+      noAccount: navigator.language.startsWith('zh-CN') ? '没有账户？' : '沒有帳戶？',
+      signUp: navigator.language.startsWith('zh-CN') ? '注册' : '註冊',
+      forFree: navigator.language.startsWith('zh-CN')? ' 免费使用。' : ' 免費使用。',
+      privacyPolicy: navigator.language.startsWith('zh-CN') ? '隐私政策' : '隱私政策',
+      termsOfService: navigator.language.startsWith('zh-CN')  ? '服务条款' : '服務條款',
+      agreeText: navigator.language.startsWith('zh-CN')  ? '登录即表示您同意我们的' : '登錄即表示您同意我們的',
       conjunction: '和',
       errors: {
-        invalidCredentials: '无效的凭证！',
-        failedValidation: '提交验证失败！',
-        failedPopup: '无法打开Google登录弹窗。'
+        invalidCredentials: navigator.language.startsWith('zh-CN') ? '无效的凭证！' : '無效的憑證！',
+        failedValidation: navigator.language.startsWith('zh-CN')  ? '提交验证失败！' : '提交驗證失敗！',
+        failedPopup: navigator.language.startsWith('zh-CN') ? '无法打开Google登录弹窗。' : '無法開啟Google登入彈窗。'
       }
     },
     fr: {
