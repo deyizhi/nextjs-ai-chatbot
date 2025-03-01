@@ -37,9 +37,21 @@ export function SidebarUserNav({ user }: { user: User }) {
           >
             <DropdownMenuItem
               className="cursor-pointer"
-              onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onSelect={() => setTheme('light')}
             >
-              {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
+              Light mode
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setTheme('dark')}
+            >
+              Dark mode
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => setTheme('system')}
+            >
+              Follow system
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
@@ -48,7 +60,7 @@ export function SidebarUserNav({ user }: { user: User }) {
                 className="w-full cursor-pointer"
                 onClick={() => {
                   signOut({
-                    redirectTo: '/',
+                    redirectTo: process.env.NEXTAUTH_URL || '/',
                   });
                 }}
               >
